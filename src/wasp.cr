@@ -1,3 +1,7 @@
 require "./wasp/*"
 
-Wasp::Command.run
+if ARGV.size > 0
+  Wasp::Command.run ARGV
+else
+  Wasp::Command.run %w(--help)
+end
