@@ -1,0 +1,24 @@
+name: wasp
+version: 0.1.0
+
+authors:
+  - icyleaf <icyleaf.cn@gmail.com>
+
+targets:
+  wasp:
+    main: src/wasp.cr
+
+dependencies:
+  # kemal:
+  #   github: kemalcr/kemal
+  #   branch: master
+  # mysql:
+  #   github: waterlink/crystal-mysql
+  #   version: ~> 0.4
+  cli:
+    github: mosop/cli
+
+
+crystal: 0.21.1
+
+license: MIT
