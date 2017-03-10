@@ -1,0 +1,6 @@
+title: "Hello Wasp"
+subtitle: "A Static Site Generator"
+description: "Wasp is a Static Site Generator"
+author: "icyleaf"
+
+theme: "nest"

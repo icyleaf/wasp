@@ -1,6 +1,14 @@
 require "cli"
+require "./commands/helpers/*"
 
 module Wasp
+  abstract class GlobalOptions < Cli::Command
+    class Options
+      string "--path", var: "PATH", desc: "the root path of Wasp site"
+      help
+    end
+  end
+
   class Command < Cli::Supercommand
     class Help
       title "Wasp is a tool of static site generator, used to build your site."

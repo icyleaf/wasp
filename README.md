@@ -1,4 +1,4 @@
-# Wasp(黄蜂)
+# Wasp
 
 A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
