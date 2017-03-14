@@ -7,7 +7,9 @@ class Wasp::Command
     def run
       path = args.path? ? args.path : "."
       config = Wasp::Config.new(File.expand_path(path))
-      puts config.data.title
+      config.site.each do |k, v|
+        puts "#{k}: #{v}"
+      end
     rescue e
       puts e
     end

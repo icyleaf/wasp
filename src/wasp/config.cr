@@ -2,25 +2,42 @@ require "yaml"
 
 module Wasp
   class Config
-    property data
+    property site, page
+    @config_file : String
+    @site : YAML::Any
+    @page : YAML::Any
 
-    def initialize(path : String)
-      @default_config_file = "config.yml"
-      @config_file = path || @default_config_file
-      @config_file = File.join(@config_file, @default_config_file) if File.directory?(@config_file)
+    def initialize(@config_file = Dir.current)
+      UI.crash("Not found config file~~~~") unless File.file?(config_path)
 
-      raise "Not fount config file" unless File.exists?(@config_file)
-
-      @data = ConfigItem.from_yaml(File.read_lines(@config_file).join("\n"))
+      @site = YAML.parse(File.read(config_path))
+      @page = YAML.parse("")
     end
-  end
 
-  class ConfigItem
-    YAML.mapping(
-      title: String,
-      subtitle: String,
-      description: String,
-      author: String
-    )
+    private def config_path
+      return @config_file if @config_file && File.file?(@config_file)
+
+      @config_file = File.expand_path(@config_file)
+      @config_file = File.join(@config_file, default_config_file) if File.directory?(@config_file)
+
+      @config_file
+    end
+
+    private def default_config_file
+      @default_config_file ||= "config.yml"
+    end
+
+    # private def default_config
+    #   @site = {
+    #     "title": "",
+    #     "subtitle": "",
+    #     "description": "",
+    #     "timezone": "Asia/Shanghai",
+    #     "base_url": "http://localhost",
+    #     "theme": "nest",
+    #     "permalink": ":year/:month/:day/:title/",
+    #     "per_page": 10
+    #   }
+    # end
   end
 end

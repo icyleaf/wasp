@@ -1,11 +1,17 @@
 require "cli"
-require "./commands/helpers/*"
 
 module Wasp
   abstract class GlobalOptions < Cli::Command
     class Options
       string "--path", var: "PATH", desc: "the root path of Wasp site"
       help
+    end
+
+    def run
+      super
+    rescue e: Wasp::Error
+      puts "ddddd"
+      UI.error(e.to_s)
     end
   end
 
