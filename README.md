@@ -6,7 +6,7 @@ A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
 - [ ] site structures
 - [ ] site configurate (default)
-- [ ] parse markdown to html
+- [x] parse markdown to html
 - [ ] theme template
 - [ ] live preview with web server
 - [ ] livereload after save content(settings/post/page)

@@ -1,6 +1,10 @@
 title: "Hello Wasp"
 subtitle: "A Static Site Generator"
 description: "Wasp is a Static Site Generator"
-author: "icyleaf"
+timezone: "Asia/Shanghai"
 
+base_url: "http://localhost"
 theme: "nest"
+
+permalink: ":year/:month/:day/:title/"
+per_page: 10
