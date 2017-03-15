@@ -1,5 +1,7 @@
 # Wasp
 
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/icyleaf/wasp/blob/master/LICENSE) [![Dependency Status](https://shards.rocks/badge/github/icyleaf/wasp/status.svg)](https://shards.rocks/github/icyleaf/wasp) [![devDependency Status](https://shards.rocks/badge/github/icyleaf/wasp/dev_status.svg)](https://shards.rocks/github/icyleaf/wasp) ![Status](https://img.shields.io/badge/status-develop-yellow.svg)
+
 A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
 ## Todo
