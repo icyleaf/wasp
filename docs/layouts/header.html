@@ -1,0 +1,1 @@
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">

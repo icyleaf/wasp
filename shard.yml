@@ -15,9 +15,9 @@ dependencies:
   cli:
     github: mosop/cli
     branch: master
-  colorful:
-    github: icyleaf/colorful.cr
-    branch: master
+  liquid:
+    github: icyleaf/liquid.cr
+    branch: block-include
 
 crystal: 0.21.1
 

@@ -4,6 +4,8 @@ A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
 ## Todo
 
+This project is under development, DO NOT use it in production.
+
 - [ ] site structures
 - [ ] site configurate (default)
 - [x] parse markdown to html
