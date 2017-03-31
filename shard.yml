@@ -17,7 +17,7 @@ dependencies:
     branch: master
   liquid:
     github: icyleaf/liquid.cr
-    branch: block-include
+    branch: master
 
 crystal: 0.21.1
 

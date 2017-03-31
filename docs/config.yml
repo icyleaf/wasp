@@ -3,8 +3,8 @@ subtitle: "A Static Site Generator"
 description: "Wasp is a Static Site Generator"
 timezone: "Asia/Shanghai"
 
-base_url: "http://localhost"
-theme: "nest"
+base_url: "http://icyleaf.github.io/wasp"
+# theme: "nest"
 
-permalink: ":year/:month/:day/:title/"
+permalink: ":year/:month/:title/"
 per_page: 10
