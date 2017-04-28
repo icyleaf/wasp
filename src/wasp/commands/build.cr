@@ -9,17 +9,9 @@ class Wasp::Command
       caption "Build markdown to static files"
     end
 
-    private def copy_assets(site_path)
-      public_path = File.join(site_path, DEFAULT_PUBLIC_PATH)
-      FileUtils.rm_rf(public_path) if Dir.exists?(public_path)
-      FileUtils.mkdir_p(public_path)
-
-      asset_src = File.join(site_path, DEFAULT_ASSETS_PATH)
-      asset_desc = File.join(public_path, DEFAULT_ASSETS_PATH)
-      FileUtils.cp_r(asset_src, asset_desc)
-    end
-
     def run
+      start_time = Time.now
+
       site_path = File.expand_path(args.path? ? args.path : DEFAULT_CONFIG_PATH)
       content_path = File.join(site_path, DEFAULT_CONTENTS_PATH)
 
@@ -33,6 +25,8 @@ class Wasp::Command
       copy_assets(site_path)
 
       files = Array(NamedTuple(file_name: String, file_path: String, file_dir: String, file_output_name: String, file_output_path: String, context: Liquid::Context)).new
+
+      site_params = YAML.parse(File.read(File.join(site_path, "config.yml"))).as_h
 
       Dir.glob(File.join(content_path, "**", "*")).each do |f|
         file_ext = ".md"
@@ -52,7 +46,6 @@ class Wasp::Command
         text = text.gsub(metadata, "")
         content = Markdown.to_html(text)
 
-        site_params = YAML.parse(File.read(File.join(site_path, "config.yml"))).as_h
         page_params = YAML.parse(metadata).as_h
 
         file_output_name = page_params["permalink"].to_s || File.basename(file_name, file_ext)
@@ -84,12 +77,40 @@ class Wasp::Command
         }
       end
 
-      # index_ctx = Liquid::Context.new
-      # files.each do |item|
-      #
-      # end
+      file_index_path = File.join(site_path, "layouts", "index.html")
+      file_index_content = File.open(file_index_path)
+      file_index_tpl = Liquid::Template.parse(file_index_content)
 
-      pp files
+      posts = [] of Hash(String, String)
+      files.each do |file|
+        file_ctx = file["context"]
+        posts << {
+          "title" => file_ctx["page"]["title"].as_s,
+          "date" => file_ctx["page"]["date"].as_s,
+          "content" => file_ctx["page"]["content"].as_s,
+          "summary" => file_ctx["page"]["content"].as_s[0..250],
+          "link" => "#{file_ctx["site"]["base_url"].as_s}post/#{file_ctx["page"]["permalink"].as_s}",
+        }
+      end
+
+      file_index_ctx = Liquid::Context.new
+      file_index_ctx.set "site", site_params
+      file_index_ctx.set "posts", posts
+
+      File.write(File.join(site_path, DEFAULT_PUBLIC_PATH, "index.html"), file_index_tpl.render(file_index_ctx))
+
+      UI.message("total in #{(Time.now - start_time).total_milliseconds} ms")
     end
+
+    private def copy_assets(site_path)
+      public_path = File.join(site_path, DEFAULT_PUBLIC_PATH)
+      FileUtils.rm_rf(public_path) if Dir.exists?(public_path)
+      FileUtils.mkdir_p(public_path)
+
+      asset_src = File.join(site_path, DEFAULT_ASSETS_PATH)
+      asset_desc = File.join(public_path, DEFAULT_ASSETS_PATH)
+      FileUtils.cp_r(asset_src, asset_desc)
+    end
+
   end
 end

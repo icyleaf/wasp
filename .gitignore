@@ -1,5 +1,7 @@
-/doc/
+# Crystal project
 /lib/
 /bin/
 /.shards/
+
+# wasp project
 public/

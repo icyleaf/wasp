@@ -18,7 +18,7 @@ module Wasp
         if ENV.has_key?("WASP_HIDE_TIMESTAMP")
           io << ""
         else
-          io << "[#{datetime.to_s("%H:%M:%S")}]: "
+          io << "#{severity} #{datetime.to_s("%Y-%m-%d %H:%M:%S")} "
         end
 
         io << message
