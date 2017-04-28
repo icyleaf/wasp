@@ -32,7 +32,7 @@ class Wasp::Command
 
       copy_assets(site_path)
 
-      # files = Array(NamedTuple(file_name: String, file_path: String, file_dir: String, file_output_name: String, file_output_url: String, file_output_path: String, context: Liquid::Context)).new
+      files = Array(NamedTuple(file_name: String, file_path: String, file_dir: String, file_output_name: String, file_output_path: String, context: Liquid::Context)).new
 
       Dir.glob(File.join(content_path, "**", "*")).each do |f|
         file_ext = ".md"
@@ -52,39 +52,44 @@ class Wasp::Command
         text = text.gsub(metadata, "")
         content = Markdown.to_html(text)
 
-        # # config = Wasp::Config.new(File.expand_path(path))
-        # # config.page = YAML.parse(metadata)
-        # # puts Wasp::Template.new(config, content)
+        site_params = YAML.parse(File.read(File.join(site_path, "config.yml"))).as_h
+        page_params = YAML.parse(metadata).as_h
 
-        ctx = Liquid::Context.new
-        ctx.set "site", JSON.parse(YAML.parse(File.read(File.join(site_path, "config.yml"))).to_json)
-        ctx.set "page", JSON.parse(YAML.parse(metadata).to_json)
-        ctx.set "content", content
-
-        tpl_file = File.open(File.join(site_path, "layouts/post.html"))
-        tpl = Liquid::Template.parse(tpl_file)
-
-        file_output_name = ctx["page"]["permalink"].to_s || File.basename(file_name, file_ext)
+        file_output_name = page_params["permalink"].to_s || File.basename(file_name, file_ext)
         file_output_url = File.join(file_dir, file_output_name)
         file_output_path = File.join(file_dir, file_output_name)
         file_output_index = "index.html"
 
+        page_params["url"] = file_output_url
+        page_params["content"] = content
+
+        ctx = Liquid::Context.new
+        ctx.set "site", site_params
+        ctx.set "page", page_params
+
+        tpl_file = File.open(File.join(site_path, "layouts/post.html"))
+        tpl = Liquid::Template.parse(tpl_file)
+
         UI.message("Write html: #{File.join(file_output_path, file_output_index)}")
         FileUtils.mkdir_p(File.join(site_path, DEFAULT_PUBLIC_PATH, file_output_path))
-        File.write(File.join(site_path, DEFAULT_PUBLIC_PATH, file_output_path, file_output_name), tpl.render(ctx))
+        File.write(File.join(site_path, DEFAULT_PUBLIC_PATH, file_output_path, file_output_index), tpl.render(ctx))
 
-        # files << {
-        #   "file_name" : file_name,
-        #   "file_dir" : file_dir,
-        #   "file_path" : f,
-        #   "file_output_name" : file_output_name,
-        #   "file_output_url" : file_output_url,
-        #   "file_output_path" : File.join(file_output_path, file_output_index),
-        #   "context": ctx,
-        # }
+        files << {
+          "file_name" : file_name,
+          "file_dir" : file_dir,
+          "file_path" : f,
+          "file_output_name" : file_output_name,
+          "file_output_path" : File.join(file_output_path, file_output_index),
+          "context": ctx,
+        }
       end
 
-      # puts files
+      # index_ctx = Liquid::Context.new
+      # files.each do |item|
+      #
+      # end
+
+      pp files
     end
   end
 end
