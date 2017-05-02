@@ -1,6 +1,6 @@
 title: "Hello Wasp"
 subtitle: "A Static Site Generator"
-description: "Wasp is a Static Site Generator"
+description: "Wasp is a Static Site Generator writes in Crystal."
 timezone: "Asia/Shanghai"
 
 base_url: "http://icyleaf.github.io/wasp"

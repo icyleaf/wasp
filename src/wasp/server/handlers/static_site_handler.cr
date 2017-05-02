@@ -80,6 +80,9 @@ module Wasp
       when ".txt"          then "text/plain"
       when ".htm", ".html" then "text/html"
       when ".css"          then "text/css"
+      when ".jpg", ".jpeg" then "image/jpeg"
+      when ".gif"          then "image/gif"
+      when ".png"          then "image/png"
       when ".js"           then "application/javascript"
       else                      "application/octet-stream"
       end

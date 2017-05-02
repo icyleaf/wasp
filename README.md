@@ -24,7 +24,7 @@ This project is under development, DO NOT use it in production.
 - [x] site configurate (default)
 - [x] parse markdown to html
 - [x] theme template
-- [ ] live preview with web server
+- [x] live preview with web server
 - [ ] livereload after save content(settings/post/page)
 - [ ] admin panel
 - [ ] command line tool

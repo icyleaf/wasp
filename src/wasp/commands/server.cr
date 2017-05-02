@@ -29,7 +29,7 @@ class Wasp::Command
 
       server = HTTP::Server.new(args.port.to_i, [
         HTTP::ErrorHandler.new,
-        # HTTP::LogHandler.new,
+        HTTP::LogHandler.new,
         Wasp::StaticSiteHandler.new(root_path),
       ])
 
