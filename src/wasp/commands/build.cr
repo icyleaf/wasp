@@ -10,7 +10,7 @@ class Wasp::Command
     end
 
     class Options
-      string %w(-b --baseURL), var: "string", default: "/", desc: "hostname (and path) to the root, e.g. http://icyleaf.com/"
+      string %w(-b --baseURL), var: "string", desc: "hostname (and path) to the root, e.g. http://icyleaf.com/"
       help
     end
 
