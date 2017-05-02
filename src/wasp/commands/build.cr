@@ -12,7 +12,7 @@ class Wasp::Command
     def run
       start_time = Time.now
 
-      site_path = File.expand_path(args.path? ? args.path : DEFAULT_CONFIG_PATH)
+      site_path = File.expand_path(args.source? ? args.source : DEFAULT_CONFIG_PATH)
       content_path = File.join(site_path, DEFAULT_CONTENTS_PATH)
 
       # step 1: create public directory if not exists.

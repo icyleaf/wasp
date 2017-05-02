@@ -5,7 +5,7 @@ class Wasp::Command
     end
 
     def run
-      puts "#{Wasp::NAME} - #{Wasp::DESC} v#{Wasp::VERSION}"
+      puts "#{Wasp::NAME} - #{Wasp::DESC} v#{Wasp::VERSION} in Crystal v#{Crystal::VERSION}"
     end
   end
 end

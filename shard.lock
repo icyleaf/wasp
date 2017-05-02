@@ -6,11 +6,11 @@ shards:
 
   cli:
     github: mosop/cli
-    commit: 4e34f3d90cb33477ab55cc25b89fcecfd157deea
+    commit: 2ce3d38288b1a701b61ff352f2ebca427f87a77c
 
   kemal:
     github: kemalcr/kemal
-    commit: 1177619da93d1260c36390d94323adba1318a788
+    commit: 0b4856b7417592743a27fc3e30867fd141395bf6
 
   kilt:
     github: jeromegn/kilt
@@ -18,7 +18,7 @@ shards:
 
   liquid:
     github: icyleaf/liquid.cr
-    commit: 295fcc151d439b396dac1fb3baa74819aea1e666
+    commit: 1b7c4ed58177d77e7694e886a4aafc2ca545ae0a
 
   optarg:
     github: mosop/optarg

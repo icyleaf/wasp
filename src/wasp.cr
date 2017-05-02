@@ -2,11 +2,14 @@ require "./wasp/*"
 require "./wasp/ext/*"
 require "./wasp/helpers/*"
 
-# if ARGV.size > 0
-#   Wasp::Command.run ARGV
-# else
-#   Wasp::Command.run %w(--help)
-# end
-#
-args = %w(build --path docs)
-Wasp::Command.run args
+if ARGV.size > 0
+  args = if ARGV[0].includes?(" ")
+    ARGV[0].split(" ") + ARGV[1..-1]
+  else
+    ARGV
+  end
+
+  Wasp::Command.run(args)
+else
+  Wasp::Command.run %w(--help)
+end

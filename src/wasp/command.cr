@@ -12,8 +12,8 @@ module Wasp
     DEFAULT_SINGLE_FILE = "single.html"
 
     class Options
-      string "--path", var: "PATH", desc: "the root path of Wasp site"
-      string "--output", var: "PATH", desc: "the root path of Wasp site"
+      string %w(-s --source), var: "string", desc: "the source path of site to read"
+      string %w(-o --output), var: "string", desc: "the path of generate to write"
       help
     end
 
@@ -32,8 +32,8 @@ module Wasp
     end
 
     class Options
-      string "--path", var: "PATH", desc: "the root path of Wasp site"
-      string "--output", var: "PATH", desc: "the root path of Wasp site"
+      string "--path", var: "string", desc: "the root path of Wasp site"
+      string "--output", var: "string", desc: "the root path of Wasp site"
       help
     end
   end

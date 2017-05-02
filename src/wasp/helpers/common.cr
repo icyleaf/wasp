@@ -1,4 +1,8 @@
 module Wasp::Helper
+  def self.source_path(args)
+    args.source? ? args.source : "."
+  end
+
   def self.metadata(text) : Array
     metadata_regex = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
     metadata = {} of String => String

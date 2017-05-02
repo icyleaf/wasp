@@ -5,7 +5,7 @@ class Wasp::Command
     end
 
     def run
-      path = args.path? ? args.path : "."
+      path = args.source? ? args.source : "."
       config = Wasp::Config.new(File.expand_path(path))
       config.site.each do |k, v|
         puts "#{k}: #{v}"

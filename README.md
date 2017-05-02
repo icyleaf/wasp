@@ -1,6 +1,6 @@
 # Wasp
 
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/icyleaf/wasp/blob/master/LICENSE) [![Dependency Status](https://shards.rocks/badge/github/icyleaf/wasp/status.svg)](https://shards.rocks/github/icyleaf/wasp) [![devDependency Status](https://shards.rocks/badge/github/icyleaf/wasp/dev_status.svg)](https://shards.rocks/github/icyleaf/wasp) ![Status](https://img.shields.io/badge/status-develop-yellow.svg)
+![Status](https://img.shields.io/badge/status-development-yellow.svg)[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/icyleaf/wasp/blob/master/LICENSE) [![Dependency Status](https://shards.rocks/badge/github/icyleaf/wasp/status.svg)](https://shards.rocks/github/icyleaf/wasp) [![devDependency Status](https://shards.rocks/badge/github/icyleaf/wasp/dev_status.svg)](https://shards.rocks/github/icyleaf/wasp)
 
 A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
@@ -8,10 +8,10 @@ A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
 This project is under development, DO NOT use it in production.
 
-- [ ] site structures
-- [ ] site configurate (default)
+- [x] site structures
+- [x] site configurate (default)
 - [x] parse markdown to html
-- [ ] theme template
+- [x] theme template
 - [ ] live preview with web server
 - [ ] livereload after save content(settings/post/page)
 - [ ] admin panel
@@ -24,7 +24,7 @@ This project is under development, DO NOT use it in production.
 
 ## Inspires
 
-- [Hugo](https://github.com/spf13/hugo)
+- [hugo](https://github.com/spf13/hugo)
 - [journey](https://github.com/kabukky/journey)
 - [dingo](https://github.com/dingoblog/dingo)
 
@@ -38,4 +38,4 @@ This project is under development, DO NOT use it in production.
 
 ## Contributors
 
-- [icyleaf](https://github.com/icyleaf) icyleaf - creator, maintainer
+- [icyleaf](https://github.com/icyleaf) - creator, maintainer
