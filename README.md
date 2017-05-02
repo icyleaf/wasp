@@ -23,16 +23,17 @@ This project is under development, DO NOT use it in production.
 - [x] site structures
 - [x] site configurate (default)
 - [x] parse markdown to html
-- [x] theme template
+- [ ] theme template
 - [x] live preview with web server
-- [ ] livereload after save content(settings/post/page)
+- [x] livereload after save content(settings/post/page)
 - [ ] admin panel
 - [ ] command line tool
+  - [x] `config`: print site configuration
   - [ ] `new site`: create a new site
   - [ ] `new post`: create a new post
   - [ ] `search`: search post
-  - [ ] `generate`: generate to static pages
-  - [ ] `server`: run a web server
+  - [x] `build`: generate to static pages
+  - [x] `server`: run a web server
 
 ## Inspires
 

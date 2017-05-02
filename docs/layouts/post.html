@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{{ page.title }} | {{ site.title }}</title>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Parallax Template - Materialize</title>
+  <meta name="description" content=" {{ site.description }}">
+  <meta name="author" content="{{ site.author }}">
+  <title>{{ page.title }} | {{ site.title }}</title>
 
-    {% include "header.html" %}
-  </head>
+  {% include "header.html" %}
+</head>
 
-  <body>
-    <article>
-      <h1 class="article-title">{{ page.title }}</h1>
-      <div class="article-content">{{ page.content }}</div>
-    </article>
-  </body>
+<body>
+  <header>
+    <nav class="top-nav yellow darken-3">
+      <div class="container">
+        <div class="nav-wrapper"><a class="page-title">{{ page.title }}</a></div>
+      </div>
+    </nav>
+    <div class="container">
+      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+        <i class="material-icons">menu</i>
+       </a>
+    </div>
+    <ul id="nav-mobile" class="side-nav fixed">
+      <li class="logo" style="padding-bottom: 30px">
+        <a id="logo-container" href="http://materializecss.com/" class="brand-logo">
+          <h3 style="text-align:center">Wasp</h3>
+        </a>
+      </li>
+
+      <li class="bold"><a class="collapsible-header active waves-effect waves-teal" href="{{ site.base_url }}">Home</a>
+      <li class="bold"><a class="collapsible-header active waves-effect waves-teal">About</a>
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Getting Startd</a>
+            <div class="collapsible-body">
+              <ul>
+                <li class="active yellow darken-3"><a href="#">Introduction</a></li>
+                <li><a href="#">Quick start</a></li>
+                <li><a href="#">Install</a></li>
+                <li><a href="#">Configuration</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m9 l10">
+          <div class="section scrollspy">{{ page.content }}</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  {% include "footer.html" %}
+</body>
 </html>

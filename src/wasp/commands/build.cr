@@ -15,6 +15,8 @@ class Wasp::Command
     end
 
     def run
+      super
+
       start_time = Time.now
 
       site_path = File.expand_path(args.source? ? args.source : DEFAULT_CONFIG_PATH)
@@ -84,7 +86,7 @@ class Wasp::Command
           "context": ctx,
         }
 
-        UI.message("'#{File.join(file_dir, file_name)}' to '#{File.join(file_output_path, file_output_index)}'")
+        UI.verbose("From '#{File.join(file_dir, file_name)}' to '#{File.join(file_output_path, file_output_index)}'")
       end
 
       file_index_path = File.join(site_path, "layouts", "index.html")
@@ -109,7 +111,7 @@ class Wasp::Command
 
       File.write(File.join(site_path, DEFAULT_PUBLIC_PATH, "index.html"), file_index_tpl.render(file_index_ctx))
 
-      UI.message("total in #{(Time.now - start_time).total_milliseconds} ms")
+      UI.message("Total in #{(Time.now - start_time).total_milliseconds} ms")
     end
 
     private def copy_assets(site_path)
