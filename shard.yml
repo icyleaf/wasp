@@ -9,9 +9,6 @@ targets:
     main: src/wasp.cr
 
 dependencies:
-  kemal:
-    github: kemalcr/kemal
-    branch: master
   cli:
     github: mosop/cli
     branch: master

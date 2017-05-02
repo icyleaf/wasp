@@ -1,4 +1,5 @@
 require "http/server"
+require "../server/handlers/*"
 
 class Wasp::Command
   class Server < GlobalOptions
@@ -13,12 +14,21 @@ class Wasp::Command
     end
 
     def run
+      Build.run(["-s", args.source])
+
       UI.message "Web Server is running at http://127.0.0.1:#{args.port} (Press Ctrl+C to stop)"
 
-      server = HTTP::Server.new(args.port.to_i) do |context|
-        context.response.content_type = "text/plain"
-        context.response.print "Hello world, got #{context.request.path}!"
+      root_path = if args.source?
+        File.join(args.source, "public")
+      else
+        "public"
       end
+
+      server = HTTP::Server.new(args.port.to_i, [
+        HTTP::ErrorHandler.new,
+        # HTTP::LogHandler.new,
+        Wasp::StaticSiteHandler.new(root_path),
+      ])
 
       server.listen
     end

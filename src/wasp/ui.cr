@@ -3,6 +3,8 @@ require "logger"
 
 module Wasp
   class UI
+    @log_level : Logger::Severity
+
     def self.instance
       @@instance ||= new
     end
@@ -13,7 +15,8 @@ module Wasp
       end
     {% end %}
 
-    def initialize(@logger = Logger.new(STDOUT))
+    def initialize(@logger = Logger.new(STDOUT), @log_level = Logger::DEBUG)
+      @logger.level = @log_level
       @logger.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
         if ENV.has_key?("WASP_HIDE_TIMESTAMP")
           io << ""

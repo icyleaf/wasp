@@ -8,14 +8,6 @@ shards:
     github: mosop/cli
     commit: 2ce3d38288b1a701b61ff352f2ebca427f87a77c
 
-  kemal:
-    github: kemalcr/kemal
-    commit: 0b4856b7417592743a27fc3e30867fd141395bf6
-
-  kilt:
-    github: jeromegn/kilt
-    version: 0.3.3
-
   liquid:
     github: icyleaf/liquid.cr
     commit: 1b7c4ed58177d77e7694e886a4aafc2ca545ae0a
@@ -23,10 +15,6 @@ shards:
   optarg:
     github: mosop/optarg
     version: 0.5.7
-
-  radix:
-    github: luislavena/radix
-    version: 0.3.8
 
   string_inflection:
     github: mosop/string_inflection
