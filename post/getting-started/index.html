@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Getting Started | Hello Wasp</title>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Parallax Template - Materialize</title>
+  <meta name="description" content=" Wasp is a Static Site Generator written in Crystal.">
+  <meta name="author" content="">
+  <title>Getting Started | Hello Wasp</title>
 
-    <!-- CSS  -->
+  <!-- CSS  -->
 <link href="https://icyleaf.github.io/wasp/static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 <link href="https://icyleaf.github.io/wasp/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
@@ -16,14 +18,95 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-  </head>
+</head>
 
-  <body>
-    <article>
-      <h1 class="article-title">Getting Started</h1>
-      <div class="article-content"><h1>What is Wasp?</h1>
+<body>
+  <header>
+    <nav class="top-nav yellow darken-3">
+      <div class="container">
+        <div class="nav-wrapper"><a class="page-title">Getting Started</a></div>
+      </div>
+    </nav>
+    <div class="container">
+      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+        <i class="material-icons">menu</i>
+       </a>
+    </div>
+    <ul id="nav-mobile" class="side-nav fixed">
+      <li class="logo" style="padding-bottom: 30px">
+        <a id="logo-container" href="http://materializecss.com/" class="brand-logo">
+          <h3 style="text-align:center">Wasp</h3>
+        </a>
+      </li>
+
+      <li class="bold"><a class="collapsible-header active waves-effect waves-teal" href="https://icyleaf.github.io/wasp/">Home</a>
+      <li class="bold"><a class="collapsible-header active waves-effect waves-teal">About</a>
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Getting Startd</a>
+            <div class="collapsible-body">
+              <ul>
+                <li class="active yellow darken-3"><a href="#">Introduction</a></li>
+                <li><a href="#">Quick start</a></li>
+                <li><a href="#">Install</a></li>
+                <li><a href="#">Configuration</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m9 l10">
+          <div class="section scrollspy"><h1>What is Wasp?</h1>
 
 <p>Wasp is a general-purpose website framework. Technically speaking, Wasp is a static site generator. Unlike other systems which dynamically build a page every time a visitor requests one, Wasp does the building when you create your content. Since websites are viewed far more often than they are edited, Hugo is optimized for website viewing while providing a great writing experience.</p></div>
-    </article>
-  </body>
+        </div>
+      </div>
+    </div>
+  </main>
+
+    <footer class="page-footer yellow darken-3">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Hello Wasp</h5>
+          <p class="grey-text text-lighten-4">Wasp is a Static Site Generator written in Crystal.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Inspires</h5>
+          <ul>
+            <li><a class="white-text" href="https://github.com/spf13/hugo">hugo</a></li>
+            <li><a class="white-text" href="https://github.com/kabukky/journey">journey</a></li>
+            <li><a class="white-text" href="https://github.com/dingoblog/dingo">dingo</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="https://github.com/icyleaf">Github</a></li>
+            <li><a class="white-text" href="https://twitter.com/icyleaf">Twitter</a></li>
+            <li><a class="white-text" href="http://weibo.com/icy1eaf">Sina Weibo</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://icyleaf.com">icyleaf</a> with <3
+      </div>
+    </div>
+  </footer>
+
+  <!--  Scripts-->
+  <script src="https://icyleaf.github.io/wasp/static/js/jquery.min.js"></script>
+  <script src="https://icyleaf.github.io/wasp/static/js/materialize.min.js"></script>
+  <script src="https://icyleaf.github.io/wasp/static/js/init.js"></script>
+</body>
 </html>

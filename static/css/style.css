@@ -11,6 +11,10 @@ nav .brand-logo {
   color: #444;
 }
 
+header, main, footer {
+  padding-left: 150px;
+}
+
 p {
   line-height: 2rem;
 }
