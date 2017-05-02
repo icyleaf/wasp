@@ -1,1 +1,20 @@
 language: crystal
+env:
+  global:
+  - GH_REF: github.com/icyleaf/wasp
+  - secure: M5vG63QkepGbwpM45sU+yQRijDn4dgTN1fDXGkLIvglj8Yftfb5okCY3pvT1+G6PX2GCVK1xYCRopB9YuQKNwCXRd4dcyj6sx8LVCpa+j/lulZRtqUoLRiMBCIXDn7nSVg83uOAA7PF4Z59WNKz+oR1zGYUJODPB3tKx75oXQRKglQaG28812EXFy/+eOrAvQgfVT12i8RPHRXxci57/epQLTNz8i3mekn9FCPEWW78jperO++6CwMiwIRGgGq0ULBfVEW+5J2ZZRPkCjnFslpopmyHnJJUiLKGhVOR2A1IUq14xTMFGVvgFhIrrqpfXEMidab5QtvUXGJxOVeU85LSvscyiuYpybcwQOuolQBgcSlxA5pqKaopG6PrBB+Q8V/ixpxZBO+36uDe1+WVuBcIvpoYXR0wGTCiAmDlfJEeQ+wayYhtQo/RXUKZ8ECH77WzpRAvEtQ1n2L6Gy3erWmCpKLF5sU/CmW9v4eW1KtJFuSVenpsvvkLyPb0E3NRf8t7/u3WYKTvkQiKh2DxU0paAKT89Bu3YrRDgpaBF9TdtyFivNiG0+woU0aOoyq3EIJJlVuXrW7Yn4ReN2lE37M2m0SD6Jh7ToEPsLBkE8iyY5aTjSXDE6Ie2/5bURMK2FtrscrBxVrpWPmt5D3e4TMc6b1t2FOSb3lFz6MJLLX4=
+script:
+- crystal build src/wasp.cr -o bin/wasp
+after_script:
+- COMMIT_HASH=$(git rev-parse --short HEAD)
+- "./bin/wasp build --source docs"
+- cd docs/public
+- git config --global user.name "icyleaf"
+- git config --global user.email "icyleaf.cn@gmail.com"
+- git init
+- git remote add origin "https://${GH_TOKEN}@${GH_REF}.git"
+- git fetch origin
+- git reset origin/gh-pages
+- git add -A
+- git commit --allow-empty -m "Updating to ${COMMIT_HASH}"
+- git push origin HEAD:gh-pages
