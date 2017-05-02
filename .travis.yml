@@ -2,12 +2,13 @@ language: crystal
 env:
   global:
   - GH_REF: github.com/icyleaf/wasp
-  - secure: M5vG63QkepGbwpM45sU+yQRijDn4dgTN1fDXGkLIvglj8Yftfb5okCY3pvT1+G6PX2GCVK1xYCRopB9YuQKNwCXRd4dcyj6sx8LVCpa+j/lulZRtqUoLRiMBCIXDn7nSVg83uOAA7PF4Z59WNKz+oR1zGYUJODPB3tKx75oXQRKglQaG28812EXFy/+eOrAvQgfVT12i8RPHRXxci57/epQLTNz8i3mekn9FCPEWW78jperO++6CwMiwIRGgGq0ULBfVEW+5J2ZZRPkCjnFslpopmyHnJJUiLKGhVOR2A1IUq14xTMFGVvgFhIrrqpfXEMidab5QtvUXGJxOVeU85LSvscyiuYpybcwQOuolQBgcSlxA5pqKaopG6PrBB+Q8V/ixpxZBO+36uDe1+WVuBcIvpoYXR0wGTCiAmDlfJEeQ+wayYhtQo/RXUKZ8ECH77WzpRAvEtQ1n2L6Gy3erWmCpKLF5sU/CmW9v4eW1KtJFuSVenpsvvkLyPb0E3NRf8t7/u3WYKTvkQiKh2DxU0paAKT89Bu3YrRDgpaBF9TdtyFivNiG0+woU0aOoyq3EIJJlVuXrW7Yn4ReN2lE37M2m0SD6Jh7ToEPsLBkE8iyY5aTjSXDE6Ie2/5bURMK2FtrscrBxVrpWPmt5D3e4TMc6b1t2FOSb3lFz6MJLLX4=
+  - secure: R82uqr7beYlWx6R6/If9GMWL+0BnQZEuON6Y7S1JzX23+kqG56AayZvjfiJEOCFyQdg7P6iJDud6KTbFos3NMj6lEuX3uHOqaJVMtBFX6g/fEuhXwap9eUHUu9Dum2uh62uSVAbP9wsJ8AwDLrTCuIdt+FJUCjB2SMxQZTj6kEjoYHxai4JtW6O2rX2QIPkPiBWzbviNpkushJ9/GFZuTc+W/zGvK7wOan7lVXX9xkGVxTzXJjGPS8Pl8i9vIjlL6WWsVRsv9F4M8bR5ByJaV6vWCvJXgBJabLSJDMKMuBny54hQ0O5vsbaLJPKj94pu2VQ6KAOR1XDbmI0PqbniwgPj1B/H89Z1c6PoLiXugcPIC6C46ggbgnN6bYyAX3CsTYxzrObnwT59umOzbhm5qgbwzmbjpG8OAuDiP5Ic3SbW09Jc/Ad5iClJI+suOWcfXplKojlwCqG46cB8DA+w16x5gQzgYNc/nJ7wLm5FPtPDHZqj/c0WBD83A+bCwKB8fDpvswusCg7qOIPMffXIT0PYX/1yeFiVCAS1jXBg+st/CvXVWMBufWSsc4X7ufnpB8/77GWQjPu/IwYeX9sgrFYHqFAKmNkZbFXc2XsYJe9NAOaMKdhA7VjkT5IOgUvJJmSkIyZDUyAHmoJgHojbVcaJjFiKX+6Wl3zNBXpVEm0=
 script:
-- crystal build src/wasp.cr -o bin/wasp
+- crystal build --release -o wasp src/wasp.cr
 after_script:
 - COMMIT_HASH=$(git rev-parse --short HEAD)
-- "./bin/wasp build --source docs"
+- ./wasp version
+- ./wasp build --source docs
 - cd docs/public
 - git config --global user.name "icyleaf"
 - git config --global user.email "icyleaf.cn@gmail.com"
