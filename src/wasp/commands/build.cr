@@ -9,11 +9,20 @@ class Wasp::Command
       caption "Build markdown to static files"
     end
 
+    class Options
+      string %w(-b --baseURL), var: "string", default: "/", desc: "hostname (and path) to the root, e.g. http://icyleaf.com/"
+      help
+    end
+
     def run
       start_time = Time.now
 
       site_path = File.expand_path(args.source? ? args.source : DEFAULT_CONFIG_PATH)
       content_path = File.join(site_path, DEFAULT_CONTENTS_PATH)
+      public_path = File.join(site_path, DEFAULT_PUBLIC_PATH)
+
+      UI.verbose "Using config file: #{site_path}"
+      UI.verbose "Generating static files to #{File.join(public_path, DEFAULT_PUBLIC_PATH)}"
 
       # step 1: create public directory if not exists.
       # step 2: clean previous old files if exist public directory
@@ -27,6 +36,8 @@ class Wasp::Command
       files = Array(NamedTuple(file_name: String, file_path: String, file_dir: String, file_output_name: String, file_output_path: String, context: Liquid::Context)).new
 
       site_params = YAML.parse(File.read(File.join(site_path, "config.yml"))).as_h
+      site_params["base_url"] = args.baseURL if args.baseURL?
+      site_params["base_url"] = "#{site_params["base_url"]}/" unless site_params["base_url"].to_s.ends_with?("/")
 
       Dir.glob(File.join(content_path, "**", "*")).each do |f|
         file_ext = ".md"
@@ -34,8 +45,6 @@ class Wasp::Command
 
         file_name = File.basename(f)
         file_dir = File.dirname(f).gsub(content_path, "")
-
-        UI.message("Read markdown: #{file_name}")
 
         text : String = File.read(f)
         match_result = text.match(/^(---\s*\n.*?\n?)^(---\s*$\n?)/m)
@@ -63,9 +72,8 @@ class Wasp::Command
         tpl_file = File.open(File.join(site_path, "layouts/post.html"))
         tpl = Liquid::Template.parse(tpl_file)
 
-        UI.message("Write html: #{File.join(file_output_path, file_output_index)}")
-        FileUtils.mkdir_p(File.join(site_path, DEFAULT_PUBLIC_PATH, file_output_path))
-        File.write(File.join(site_path, DEFAULT_PUBLIC_PATH, file_output_path, file_output_index), tpl.render(ctx))
+        FileUtils.mkdir_p(File.join(public_path, file_output_path))
+        File.write(File.join(public_path, file_output_path, file_output_index), tpl.render(ctx))
 
         files << {
           "file_name" : file_name,
@@ -75,6 +83,8 @@ class Wasp::Command
           "file_output_path" : File.join(file_output_path, file_output_index),
           "context": ctx,
         }
+
+        UI.message("'#{File.join(file_dir, file_name)}' to '#{File.join(file_output_path, file_output_index)}'")
       end
 
       file_index_path = File.join(site_path, "layouts", "index.html")
@@ -104,6 +114,7 @@ class Wasp::Command
 
     private def copy_assets(site_path)
       public_path = File.join(site_path, DEFAULT_PUBLIC_PATH)
+
       FileUtils.rm_rf(public_path) if Dir.exists?(public_path)
       FileUtils.mkdir_p(public_path)
 

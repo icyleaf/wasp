@@ -4,6 +4,18 @@
 
 A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
+## Documents
+
+Install crystal-lang and clone the project, then to run:
+
+```
+$ crystal src/wasp.cr "server -s docs"
+
+...
+
+Web Server is running at http://127.0.0.1:8624 (Press Ctrl+C to stop)
+```
+
 ## Todo
 
 This project is under development, DO NOT use it in production.
