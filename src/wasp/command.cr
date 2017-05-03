@@ -14,13 +14,13 @@ module Wasp
     class Options
       string %w(-s --source), var: "string", desc: "the source path of site to read"
       string %w(-o --output), var: "string", desc: "the path of generate to write"
-      bool %w(-v --verbose), default: false, desc: "verbose output"
+      bool "--verbose", default: false, desc: "verbose output"
 
       help
     end
 
     def run
-      UI.instance.log_level(Logger::DEBUG) if args.verbose?
+      UI.instance.logger.level = Logger::DEBUG if args.verbose?
     end
   end
 
@@ -34,7 +34,7 @@ module Wasp
     class Options
       string "--path", var: "string", desc: "the root path of Wasp site"
       string "--output", var: "string", desc: "the root path of Wasp site"
-      bool %w(-v --verbose), default: false, desc: "verbose output"
+      bool "--verbose", default: false, desc: "verbose output"
 
       help
     end

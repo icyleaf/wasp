@@ -16,6 +16,6 @@ dependencies:
     github: icyleaf/liquid.cr
     branch: master
 
-crystal: 0.21.1
+crystal: 0.22.0
 
 license: MIT

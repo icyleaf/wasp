@@ -6,12 +6,23 @@ class Wasp::Command
 
     def run
       path = args.source? ? args.source : "."
-      config = Wasp::Config.new(File.expand_path(path))
-      config.site.each do |k, v|
+      config_file = config_file(path)
+      return UI.error("Not found config file.") unless File.file?(config_file)
+
+      config = YAML.parse(File.read(config_file))
+      config.each do |k, v|
         puts "#{k}: #{v}"
       end
-    rescue e
-      puts e
+    end
+
+    private def config_file(source_path)
+      source_path = File.expand_path(source_path)
+
+      if File.directory?(source_path)
+        File.join(source_path, "config.yml")
+      else
+        source_path
+      end
     end
   end
 end

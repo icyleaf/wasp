@@ -1,7 +1,7 @@
-require "markdown"
-require "yaml"
-require "liquid"
 require "file_utils"
+require "markdown"
+require "liquid"
+require "yaml"
 
 class Wasp::Command
   class Build < GlobalOptions
@@ -124,6 +124,5 @@ class Wasp::Command
       asset_desc = File.join(public_path, DEFAULT_ASSETS_PATH)
       FileUtils.cp_r(asset_src, asset_desc)
     end
-
   end
 end

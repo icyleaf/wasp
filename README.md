@@ -23,9 +23,9 @@ This project is under development, DO NOT use it in production.
 - [x] site structures
 - [x] site configurate (default)
 - [x] parse markdown to html
-- [ ] theme template
 - [x] live preview with web server
-- [x] livereload after save content(settings/post/page)
+- [ ] livereload after save content(settings/post/page)
+- [ ] theme template
 - [ ] admin panel
 - [ ] command line tool
   - [x] `config`: print site configuration

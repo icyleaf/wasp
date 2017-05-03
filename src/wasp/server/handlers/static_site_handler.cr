@@ -87,6 +87,5 @@ module Wasp
       else                      "application/octet-stream"
       end
     end
-
   end
 end
