@@ -1,5 +1,6 @@
 ---
 title: "Install Wasp"
+slug: "install"
 date: "2017-03-09T21:34:56+08:00"
 categories:
   - Guide

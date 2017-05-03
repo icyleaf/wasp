@@ -33,7 +33,7 @@ module Wasp::FileSystem
     end
 
     def permalink_title(ugly_url = false)  : String
-      title = @metadata.try_fetch("permalink")
+      title = @metadata.try_fetch("slug")
       unless title
         title = @name.chomp(File.extname(@name))
       end

@@ -59,7 +59,7 @@ class Wasp::Command
 
         page_params = YAML.parse(metadata).as_h
 
-        file_output_name = page_params["permalink"].to_s || File.basename(file_name, file_ext)
+        file_output_name = page_params["slug"].to_s || File.basename(file_name, file_ext)
         file_output_url = File.join(file_dir, file_output_name)
         file_output_path = File.join(file_dir, file_output_name)
         file_output_index = "index.html"
@@ -101,7 +101,7 @@ class Wasp::Command
           "date" => file_ctx["page"]["date"].as_s,
           "content" => file_ctx["page"]["content"].as_s,
           "summary" => file_ctx["page"]["content"].as_s[0..250],
-          "link" => "#{file_ctx["site"]["base_url"].as_s}post/#{file_ctx["page"]["permalink"].as_s}",
+          "link" => "#{file_ctx["site"]["base_url"].as_s}post/#{file_ctx["page"]["slug"].as_s}",
         }
       end
 
