@@ -1,5 +1,5 @@
 require "./wasp/*"
-require "./wasp/ext/*"
+require "./wasp/core_ext/*"
 require "./wasp/helpers/*"
 
 if ARGV.size > 0

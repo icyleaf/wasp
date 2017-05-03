@@ -1,6 +1,6 @@
 ---
 title: "Getting Started"
-permalink: "getting-started"
+slug: "getting-started"
 date: "2017-05-01T15:00:31+08:00"
 categories:
   - Guide
