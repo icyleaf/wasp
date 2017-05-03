@@ -6,3 +6,6 @@
 # wasp project
 public/
 test.cr
+
+# vs code
+.history
