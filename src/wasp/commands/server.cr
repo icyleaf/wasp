@@ -33,10 +33,10 @@ class Wasp::Command
       UI.message "Press Ctrl+C to stop"
 
       root_path = if args.source?
-        File.join(args.source, "public")
-      else
-        "public"
-      end
+                    File.join(args.source, "public")
+                  else
+                    "public"
+                  end
 
       server = HTTP::Server.new(args.bindHost, args.port.to_i, [
         HTTP::ErrorHandler.new,

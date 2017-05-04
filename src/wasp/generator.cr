@@ -2,10 +2,10 @@ require "./filesystem/*"
 
 module Wasp
   class Generator
-    DEFAULT_CONFIG_FILE = "config.yml"
+    DEFAULT_CONFIG_FILE   = "config.yml"
     DEFAULT_CONTENTS_PATH = "contents"
-    DEFAULT_PUBLIC_PATH = "public"
-    DEFAULT_STATIC_PATH = "static"
+    DEFAULT_PUBLIC_PATH   = "public"
+    DEFAULT_STATIC_PATH   = "static"
 
     @site_config : Hash(YAML::Type, YAML::Type)
     @files : Array(FileSystem::ContentFile)
@@ -36,12 +36,10 @@ module Wasp
     {% end %}
 
     private def default_options
-
     end
 
     private def path_to(path)
       File.join(@source_path, path)
     end
-
   end
 end

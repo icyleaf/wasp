@@ -2,13 +2,13 @@ require "cli"
 
 module Wasp
   abstract class GlobalOptions < Cli::Command
-    DEFAULT_CONFIG_PATH = "."
+    DEFAULT_CONFIG_PATH   = "."
     DEFAULT_CONTENTS_PATH = "contents/"
-    DEFAULT_PUBLIC_PATH = "public/"
-    DEFAULT_ASSETS_PATH = "static/"
+    DEFAULT_PUBLIC_PATH   = "public/"
+    DEFAULT_ASSETS_PATH   = "static/"
 
-    DEFAULT_INDEX_FILE = "index.html"
-    DEFAULT_LIST_FILE = "list.html"
+    DEFAULT_INDEX_FILE  = "index.html"
+    DEFAULT_LIST_FILE   = "list.html"
     DEFAULT_SINGLE_FILE = "single.html"
 
     class Options

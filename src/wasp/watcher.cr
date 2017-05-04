@@ -59,7 +59,6 @@ module Wasp
     def new_files
       new_files = collect_files
       if new_files.size > @files.size
-
       end
     end
 

@@ -6,10 +6,10 @@ module Wasp::FileSystem
 
     def initialize(text : String)
       @metadata = if text.empty?
-        {} of YAML::Type => YAML::Type
-      else
-        YAML.parse(text).as_h
-      end
+                    {} of YAML::Type => YAML::Type
+                  else
+                    YAML.parse(text).as_h
+                  end
     end
 
     def title
