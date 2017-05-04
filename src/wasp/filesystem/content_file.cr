@@ -3,16 +3,14 @@ require "yaml"
 module Wasp::FileSystem
   class ContentFile
     getter contents_path, name, path, text, metadata
-    getter store_path, store_name
 
     @body : String
 
     METADATA_REGEX = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
 
-    def initialize(path : String, contents_path : String, store_path = "public")
+    def initialize(path : String, @site_config : Hash(YAML::Type, YAML::Type), contents_path : String)
       @path = File.expand_path(path)
       @contents_path = contents_path.ends_with?("/") ? contents_path : contents_path + "/"
-      @store_path = File.expand_path(store_path)
       @name = File.basename(@path)
       @text = File.read(@path)
       @body = @text.gsub(METADATA_REGEX, "")
@@ -24,31 +22,50 @@ module Wasp::FileSystem
       end
     end
 
-    def permalink(ugly_url = false) : String
-      File.join(permalink_path.join("/"), permalink_title(ugly_url))
+    def summary(limit = 300)
+      @text[0..limit] + " »"
     end
 
-    def permalink_path : Array(String)
+    # def date
+    #   @
+    # end
+
+    def link(ugly_url = "false")
+      @site_config["ugly_url"] ||= ugly_url.to_s
+      File.join(@site_config["base_url"].to_s, permalink(@site_config["ugly_url"]))
+    end
+
+    def permalink(ugly_url = "false")
+      permalink = @site_config.fetch("permalink", ":filename")
+      segments = permalink.split("/")
+      segments.each do |segment|
+
+      end
+
+      # File.join(permalink_path.join("/"), permalink_slug(ugly_url))
+    end
+
+    def permalink_path
       File.dirname(@path).gsub(@contents_path, "").split("/")
     end
 
-    def permalink_title(ugly_url = false)  : String
-      title = @metadata.try_fetch("slug")
-      unless title
-        title = @name.chomp(File.extname(@name))
+    def permalink_slug(ugly_url = "false")
+      slug = @metadata.slug.to_s
+      unless slug
+        slug = @name.chomp(File.extname(@name))
       end
 
-      ugly_url ? title.to_s + ".html" : title.to_s
+      ugly_url == "true" ? slug + ".html" : slug
     end
 
-    # protected def parse_metadata
-    #   return @metadata if @metadata && !@metadata.empty?
-
-    #   if @text =~ METADATA_REGEX
-    #     @metadata = YAML.parse($1).as_h
-    #   end
-
-    #   @metadata
-    # end
+    private def parse_permalink_segment(segment)
+      case segment
+      when ":filename"
+        File.join(permalink_path.join("/"), permalink_slug(ugly_url))
+      when ":year"
+      when ":month"
+      when "day"
+      when "title"
+    end
   end
 end

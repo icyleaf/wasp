@@ -13,16 +13,17 @@ module Wasp
     def initialize(source_path : String, @options = {} of String => String)
       @source_path = File.expand_path(source_path)
 
-      raise NotFoundFileError.new("Not found config file: #{config_file}") unless File.exists?(config_file)
-      raise NotFoundFileError.new("Not found contents path: #{contents_path}") unless Dir.exists?(contents_path)
+      raise NotFoundFileError.new("Not found config file: " + config_file) unless File.exists?(config_file)
+      raise NotFoundFileError.new("Not found contents path: " + contents_path) unless Dir.exists?(contents_path)
 
       @site_config = YAML.parse(File.read(config_file)).as_h
+
       @files = [] of FileSystem::ContentFile
     end
 
     def contents
       Dir.glob(File.join(contents_path, "**", "*.md")).each do |file|
-        @files << FileSystem::ContentFile.new(file, contents_path, public_path)
+        @files << FileSystem::ContentFile.new(file, @site_config, contents_path)
       end
 
       @files
@@ -41,7 +42,6 @@ module Wasp
     private def path_to(path)
       File.join(@source_path, path)
     end
-
 
   end
 end
