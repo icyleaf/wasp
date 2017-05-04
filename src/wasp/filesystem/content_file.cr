@@ -8,7 +8,7 @@ module Wasp::FileSystem
 
     @content : String
 
-    METADATA_REGEX = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
+    FRONT_MATTER_REGEX = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
 
     def initialize(path : String, @site_config : Hash(YAML::Type, YAML::Type), contents_path : String)
       @path = File.expand_path(path)
@@ -16,13 +16,13 @@ module Wasp::FileSystem
       @name = File.basename(@path)
 
       text = File.read(@path)
-      if text =~ METADATA_REGEX
-        @metadata = Metadata.new($1)
+      if text =~ FRONT_MATTER_REGEX
+        @front_matter = FrontMatter.new($1)
       else
-        raise MissingMetadataError.new("Not fount metadata in " + path)
+        raise MissingFrontMatterError.new("Not fount metadata in " + path)
       end
 
-      @content = Markdown.to_html(text.gsub(METADATA_REGEX, ""))
+      @content = Markdown.to_html(text.gsub(FRONT_MATTER_REGEX, ""))
     end
 
     def summary(limit = 300)
@@ -48,11 +48,11 @@ module Wasp::FileSystem
     end
 
     macro method_missing(call)
-      @metadata.{{ call.name.id }}
+      @front_matter.{{ call.name.id }}
     end
 
     def as_h
-      @metadata.as_h.merge({
+      @front_matter.as_h.merge({
         "summary" => summary,
         "content" => content,
         "permalink" => permalink,
@@ -65,13 +65,13 @@ module Wasp::FileSystem
 
       case section
       when ":year"
-        @metadata.date.year
+        @front_matter.date.year
       when ":month"
-        @metadata.date.month
+        @front_matter.date.month
       when ":day"
-        @metadata.date.day
+        @front_matter.date.day
       when ":title", ":slug"
-        @metadata.slug ? @metadata.slug : URI.escape(@metadata.title.downcase.gsub(" ", "-"))
+        @front_matter.slug ? @front_matter.slug : URI.escape(@front_matter.title.downcase.gsub(" ", "-"))
       when ":section"
         File.dirname(@path).gsub(@contents_path, "")
       else

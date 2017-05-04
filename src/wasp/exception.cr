@@ -5,6 +5,6 @@ module Wasp
   class NotFoundFileError < Error
   end
 
-  class MissingMetadataError < Error
+  class MissingFrontMatterError < Error
   end
 end
