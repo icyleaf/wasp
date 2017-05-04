@@ -1,13 +1,15 @@
 module Wasp::FileSystem
   class Metadata
-    @metadata : Hash(YAML::Type, YAML::Type)
-
     def self.parse(text : String)
       self.new(text)
     end
 
     def initialize(text : String)
-      @metadata = YAML.parse(text).as_h
+      @metadata = if text.empty?
+        {} of YAML::Type => YAML::Type
+      else
+        YAML.parse(text).as_h
+      end
     end
 
     def title

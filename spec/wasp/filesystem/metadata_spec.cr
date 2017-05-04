@@ -1,6 +1,7 @@
 describe Wasp::FileSystem::Metadata do
-
-  it "works" do
-    false.should eq(true)
+  describe "#initialize" do
+    it "should works with empty string" do
+      m = Wasp::FileSystem::Metadata.new("")
+    end
   end
 end

@@ -1,4 +1,5 @@
+ENV["WASP_SPEC_RUNNING"] = "true"
+
 require "spec"
 require "../src/wasp"
-
-ENV["WASP_SPEC_RUNNING"] = "true"
+require "./wasp/filesystem/*"
