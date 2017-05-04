@@ -2,20 +2,24 @@ module Wasp::FileSystem
   class Metadata
     @metadata : Hash(YAML::Type, YAML::Type)
 
+    def self.parse(text : String)
+      self.new(text)
+    end
+
     def initialize(text : String)
       @metadata = YAML.parse(text).as_h
     end
 
     def title
-      @metadata.fetch("title", "")
+      @metadata.fetch("title", "").to_s
     end
 
     def date
-      @metadata.fetch("date", "1970-01-01T00:00:00+08:00")
+      Time.parse(@metadata.fetch("date", "1970-01-01T00:00:00+08:00").to_s, "%Y-%m-%dT%H:%M:%S%:z")
     end
 
     def slug
-      @metadata.fetch("slug", "")
+      @metadata.fetch("slug", "").to_s
     end
 
     def tags

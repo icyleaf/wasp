@@ -2,7 +2,7 @@ require "yaml"
 
 module Wasp::FileSystem
   class ContentFile
-    getter contents_path, name, path, text, metadata
+    getter contents_path, name, path, body
 
     @body : String
 
@@ -12,23 +12,20 @@ module Wasp::FileSystem
       @path = File.expand_path(path)
       @contents_path = contents_path.ends_with?("/") ? contents_path : contents_path + "/"
       @name = File.basename(@path)
-      @text = File.read(@path)
-      @body = @text.gsub(METADATA_REGEX, "")
 
+      text = File.read(@path)
       if text =~ METADATA_REGEX
         @metadata = Metadata.new($1)
       else
         raise MissingMetadataError.new("Not fount metadata in " + path)
       end
+
+      @body = text.gsub(METADATA_REGEX, "")
     end
 
     def summary(limit = 300)
-      @text[0..limit] + " »"
+      @body[0..limit] + " »"
     end
-
-    # def date
-    #   @
-    # end
 
     def link(ugly_url = "false")
       @site_config["ugly_url"] ||= ugly_url.to_s
@@ -36,36 +33,42 @@ module Wasp::FileSystem
     end
 
     def permalink(ugly_url = "false")
-      permalink = @site_config.fetch("permalink", ":filename")
-      segments = permalink.split("/")
-      segments.each do |segment|
+      sections = [] of String
+      @site_config.fetch("permalink", ":filename").to_s.split("/").each do |section|
+        next if section.empty?
 
+        sections << permalink_section(section).to_s
       end
 
-      # File.join(permalink_path.join("/"), permalink_slug(ugly_url))
+      uri = sections.join("/")
+      uri = uri + ".html" if ugly_url == "true"
+      uri
     end
 
-    def permalink_path
-      File.dirname(@path).gsub(@contents_path, "").split("/")
+    macro method_missing(call)
+      @metadata.{{ call.name.id }}
     end
 
-    def permalink_slug(ugly_url = "false")
-      slug = @metadata.slug.to_s
-      unless slug
-        slug = @name.chomp(File.extname(@name))
-      end
+    private def permalink_section(section)
+      return "" if !section || section.empty?
 
-      ugly_url == "true" ? slug + ".html" : slug
-    end
-
-    private def parse_permalink_segment(segment)
-      case segment
-      when ":filename"
-        File.join(permalink_path.join("/"), permalink_slug(ugly_url))
+      case section
       when ":year"
+        @metadata.date.year
       when ":month"
-      when "day"
-      when "title"
+        @metadata.date.month
+      when ":day"
+        @metadata.date.day
+      when ":title"
+        @metadata.title.downcase.gsub(" ", "-")
+      when ":slug"
+        @metadata.slug ? @metadata.slug : @metadata.title
+      when ":section"
+        File.dirname(@path).gsub(@contents_path, "")
+      else
+        # such as :filename or others
+        @name.chomp(File.extname(@name))
+      end
     end
   end
 end

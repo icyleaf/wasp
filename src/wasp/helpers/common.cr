@@ -1,16 +1,23 @@
 module Wasp::Helper
-  def self.source_path(args)
-    args.source? ? args.source : "."
-  end
+  # def self.permalink_section(section)
+  #   return "" if !section || section.empty?
 
-  def self.metadata(text) : Array
-    metadata_regex = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
-    metadata = {} of String => String
-    if text =~ metadata_regex
-      metadata = YAML.parse($1)
-      text = text.gsub(metadata_regex, "")
-    end
-
-    return [metadata, text]
-  end
+  #   case section
+  #   when ":year"
+  #     date.year
+  #   when ":month"
+  #     date.month
+  #   when ":day"
+  #     date.day
+  #   when ":title"
+  #     @metadata.title.downcase.gsub(" ", "-")
+  #   when ":slug"
+  #     @metadata.slug ? @metadata.slug : @metadata.title
+  #   when ":section"
+  #     permalink_path.join("/")
+  #   else
+  #     # such as :filename or others
+  #     @name.chomp(File.extname(@name))
+  #   end
+  # end
 end
