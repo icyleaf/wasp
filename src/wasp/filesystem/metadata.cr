@@ -61,6 +61,14 @@ module Wasp::FileSystem
       @metadata.fetch("draft", "false") == "true"
     end
 
+    def as_h
+      @metadata.merge({
+        "date" => date,
+        "tags" => tags,
+        "categories" => categories
+      })
+    end
+
     macro method_missing(call)
       @metadata.fetch({{ call.name.id.stringify }}, "")
 

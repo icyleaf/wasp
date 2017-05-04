@@ -106,9 +106,9 @@ module Wasp
     #   users that are interested. Will only be printed when
     #   FastlaneCore::Globals.verbose? = true
     #
-    #   By default those messages are shown in white
+    #   By default those messages are shown in drak gray
     def verbose(message)
-      @logger.debug(message.to_s)
+      @logger.debug(message.to_s.colorize.dark_gray)
     end
 
     # Level Deprecated: Show that a particular function is deprecated
@@ -138,10 +138,10 @@ module Wasp
 
     private def default_logger_formatter
       Logger::Formatter.new do |severity, datetime, progname, message, io|
-        if ENV.has_key?("TERMINAL_UI_HIDE_TIMESTAMP")
+        if ENV.has_key?("WASP_HIDE_TIMESTAMP")
           io << ""
         else
-          io << "#{severity} #{datetime.to_s("%Y-%m-%d %H:%M:%S")} "
+          io << "#{datetime.to_s("%Y-%m-%d %H:%M:%S")} "
         end
 
         io << message

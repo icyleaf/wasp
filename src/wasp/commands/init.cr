@@ -1,7 +1,7 @@
 class Wasp::Command
-  class New < GlobalOptions
+  class Init < GlobalOptions
     class Help
-      caption "Create a new content(post, page etc)"
+      caption "Initialize a new site"
     end
 
     def run

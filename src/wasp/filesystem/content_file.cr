@@ -1,10 +1,12 @@
+require "markdown"
 require "yaml"
+require "uri"
 
 module Wasp::FileSystem
   class ContentFile
-    getter contents_path, name, path, body
+    getter contents_path, name, path, content
 
-    @body : String
+    @content : String
 
     METADATA_REGEX = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
 
@@ -20,11 +22,11 @@ module Wasp::FileSystem
         raise MissingMetadataError.new("Not fount metadata in " + path)
       end
 
-      @body = text.gsub(METADATA_REGEX, "")
+      @content = Markdown.to_html(text.gsub(METADATA_REGEX, ""))
     end
 
     def summary(limit = 300)
-      @body[0..limit] + " »"
+      @content[0..limit] + " »"
     end
 
     def link(ugly_url = "false")
@@ -49,6 +51,15 @@ module Wasp::FileSystem
       @metadata.{{ call.name.id }}
     end
 
+    def as_h
+      @metadata.as_h.merge({
+        "summary" => summary,
+        "content" => content,
+        "permalink" => permalink,
+        "link" => link,
+      })
+    end
+
     private def permalink_section(section)
       return "" if !section || section.empty?
 
@@ -59,10 +70,8 @@ module Wasp::FileSystem
         @metadata.date.month
       when ":day"
         @metadata.date.day
-      when ":title"
-        @metadata.title.downcase.gsub(" ", "-")
-      when ":slug"
-        @metadata.slug ? @metadata.slug : @metadata.title
+      when ":title", ":slug"
+        @metadata.slug ? @metadata.slug : URI.escape(@metadata.title.downcase.gsub(" ", "-"))
       when ":section"
         File.dirname(@path).gsub(@contents_path, "")
       else

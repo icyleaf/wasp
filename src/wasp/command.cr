@@ -12,15 +12,17 @@ module Wasp
     DEFAULT_SINGLE_FILE = "single.html"
 
     class Options
-      string %w(-s --source), var: "string", desc: "the source path of site to read"
+      string %w(-s --source), var: "string", default: ".", desc: "the source path of site to read"
       string %w(-o --output), var: "string", desc: "the path of generate to write"
       bool "--verbose", default: false, desc: "verbose output"
+      bool "--verboseLog", default: false, desc: "verbose logging timestamp"
 
       help
     end
 
     def run
       UI.instance.logger.level = Logger::DEBUG if args.verbose?
+      ENV["WASP_HIDE_TIMESTAMP"] = "true" unless args.verboseLog?
     end
   end
 
@@ -32,9 +34,10 @@ module Wasp
     end
 
     class Options
-      string "--path", var: "string", desc: "the root path of Wasp site"
-      string "--output", var: "string", desc: "the root path of Wasp site"
+      string %w(-s --source), var: "string", desc: "the source path of site to read"
+      string %w(-o --output), var: "string", desc: "the path of generate to write"
       bool "--verbose", default: false, desc: "verbose output"
+      bool "--verboseLog", default: false, desc: "verbose logging timestamp"
 
       help
     end
