@@ -40,19 +40,19 @@ class Wasp::Command
 
       posts = [] of Hash(Array(YAML::Type) | Hash(YAML::Type, YAML::Type) | String | Nil, Array(YAML::Type) | Hash(YAML::Type, YAML::Type) | String | Time | Nil)
       generator.contents.each do |content|
-        content_view = File.open(File.join(generator.layouts_path, "post.html"))
-        content_template = Liquid::Template.parse(content_view)
+        single_view = File.open(File.join(generator.layouts_path, "_default/single.html"))
+        single_template = Liquid::Template.parse(single_view)
 
-        content_ctx = Liquid::Context.new
-        content_ctx.set "site", generator.site_config
-        content_ctx.set "page", content.as_h
+        single_ctx = Liquid::Context.new
+        single_ctx.set "site", generator.site_config
+        single_ctx.set "page", content.as_h
 
-        content_output_path = File.join(generator.public_path, content.permalink)
+        single_output_path = File.join(generator.public_path, content.permalink)
 
-        FileUtils.mkdir_p(content_output_path)
-        File.write(File.join(content_output_path, "index.html"), content_template.render(content_ctx))
+        FileUtils.mkdir_p(single_output_path)
+        File.write(File.join(single_output_path, "index.html"), single_template.render(single_ctx))
 
-        UI.verbose("Write to #{File.join(content_output_path, "index.html")}")
+        UI.verbose("Write to #{File.join(single_output_path, "index.html")}")
 
         posts << content.as_h
       end

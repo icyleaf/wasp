@@ -9,21 +9,12 @@
 
   <title>{{ site.title }}</title>
 
-  <!-- CSS  -->
-  {% include "header.html" %}
+  {% include "partial/header.html" %}
 </head>
 <body>
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">{{ site.title }}</a>
-      <!--<ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>-->
     </div>
   </nav>
 
@@ -76,10 +67,8 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
-
 
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
@@ -123,38 +112,12 @@
     <div class="parallax"><img src="{{ site.base_url }}static/background3.jpg" alt="Unsplashed background img 3"></div>
   </div>
 
-
-
-<!--
-    <div class="container">
-      <div class="blog-header">
-        <h1 class="blog-title">{{ site.title }}</h1>
-        <p class="lead blog-description">{{ site.description }}</p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-sm-8 blog-main">
-          {% for post in posts %}
-            <div class="blog-post">
-              <h2 class="blog-post-title">
-                <a href="{{ post.link }}">{{ post.title }}</a>
-              </h2>
-              <p class="blog-post-meta">{{ post.date }}</p>
-              <p class="blog-content">{{ post.summary }}</p>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>-->
-
   <footer class="page-footer yellow darken-3">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">{{ site.title }}</h5>
           <p class="grey-text text-lighten-4">{{ site.description }}</p>
-
 
         </div>
         <div class="col l3 s12">
@@ -182,7 +145,7 @@
     </div>
   </footer>
 
-{% include "footer.html" %}
+  {% include "partial/footer.html" %}
 
 </body>
 </html>
