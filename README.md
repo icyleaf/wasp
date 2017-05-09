@@ -6,14 +6,20 @@ A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
 ## Documents
 
-Install crystal-lang and clone the project, then to run:
+Read it [Online](https://icyleaf.github.io/wasp/) or [install](https://crystal-lang.org/docs/installation/) crystal-lang and clone the project, then to run:
 
 ```
-$ crystal src/wasp.cr "server -s docs"
-
-...
-
-Web Server is running at http://127.0.0.1:8624 (Press Ctrl+C to stop)
+$ make
+$ ./bin/wasp server -s docs --verbose
+Using config file: /Users/icyleaf/Development/crystal/wasp/docs
+Generating static files to /Users/icyleaf/Development/crystal/wasp/docs/public
+Write to /Users/icyleaf/Development/crystal/wasp/docs/public/guide/getting-started/index.html
+Write to /Users/icyleaf/Development/crystal/wasp/docs/public/guide/install/index.html
+Write to /Users/icyleaf/Development/crystal/wasp/docs/public/guide/intro/index.html
+Total in 55.375 ms
+Watch changes in '/Users/icyleaf/Development/crystal/wasp/docs/{config.yml,contents/**/*.md,layouts/**/*.html,static/**/*}'
+Web Server is running at http://localhost:8624/ (bind address 127.0.0.1)
+Press Ctrl+C to stop
 ```
 
 ## Todo
