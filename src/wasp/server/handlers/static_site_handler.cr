@@ -1,16 +1,7 @@
 require "uri"
 
 module Wasp
-  class StaticSiteHandler
-    include HTTP::Handler
-
-    @public_dir : String
-
-    def initialize(public_dir : String, fallthrough = true)
-      @public_dir = File.expand_path(public_dir)
-      @fallthrough = !!fallthrough
-    end
-
+  class StaticSiteHandler < HTTP::StaticFileHandler
     def call(context)
       unless context.request.method == "GET" || context.request.method == "HEAD"
         if @fallthrough
@@ -60,19 +51,6 @@ module Wasp
       else
         call_next(context)
       end
-    end
-
-    # given a full path of the request, returns the path
-    # of the file that should be expanded at the public_dir
-    protected def request_path(path : String) : String
-      path
-    end
-
-    private def redirect_to(context, url)
-      context.response.status_code = 302
-
-      url = URI.escape(url) { |b| URI.unreserved?(b) || b != '/' }
-      context.response.headers.add "Location", url
     end
 
     private def mime_type(path)

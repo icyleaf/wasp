@@ -1,5 +1,7 @@
 module Wasp
   class Watcher
+    getter rules
+
     struct WatcherFile
       property path, mtime, status
 

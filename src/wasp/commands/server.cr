@@ -24,41 +24,78 @@ class Wasp::Command
       build_args = ["--source", args.source, "--baseURL", base_url]
       Build.run(build_args)
 
-      if args.watch?
-        UI.verbose "Watch changes each #{args.watchInterval}s"
-        watching_changes(args.source, build_args, args.watchInterval.to_i)
-      end
-
-      UI.message "Web Server is running at http://localhost:#{args.port}/ (bind address #{args.bindHost})"
-      UI.message "Press Ctrl+C to stop"
-
-      root_path = if args.source?
+      port = args.port
+      public_path = if args.source?
                     File.join(args.source, "public")
                   else
                     "public"
                   end
 
-      server = HTTP::Server.new(args.bindHost, args.port.to_i, [
+      handlers = [
         HTTP::ErrorHandler.new,
-        # HTTP::LogHandler.new,
-        Wasp::StaticSiteHandler.new(root_path),
-      ])
+        Wasp::StaticSiteHandler.new(public_path),
+      ] of HTTP::Handler
 
+      if args.watch?
+        source_path = File.expand_path(args.source)
+        watcher = Watcher.new(source_path)
+
+        UI.verbose "Watch changes in '#{source_path}/{#{watcher.rules.join(",")}}'"
+
+        livereload_hanlder = Wasp::LiveReloadHandler.new(public_path, port.to_i) do |ws|
+          ws.on_message do |message|
+            if message.includes?("\"command\":\"hello\"")
+              ws.send({
+                "command" => "hello",
+                "protocols" => [
+                  "http://livereload.com/protocols/official-7"
+                ],
+                "serverName": "Wasp"
+              }.to_json)
+            end
+          end
+
+          spawn do
+            loop do
+              watcher.watch_changes do |file, status|
+                UI.message "File #{status}: #{file}"
+                Build.run(build_args)
+
+                ws.send({
+                  "command" => "reload",
+                  "path": file,
+                  "liveCSS": true
+                }.to_json)
+              end
+
+              sleep args.watchInterval.to_i
+            end
+          end
+        end
+
+        handlers.insert(1, livereload_hanlder)
+      end
+
+      UI.message "Web Server is running at http://localhost:#{args.port}/ (bind address #{args.bindHost})"
+      UI.message "Press Ctrl+C to stop"
+      server = HTTP::Server.new(args.bindHost, port.to_i, handlers)
       server.listen
     end
 
-    def watching_changes(source, build_args, watch_interval)
-      watcher = Watcher.new(source)
-      spawn do
-        loop do
-          watcher.watch_changes do |file, status|
-            UI.message "File #{status}: #{file}"
-            Build.run(build_args)
-          end
+    # def watching_changes(source, build_args, watch_interval)
+    #   watcher = Watcher.new(source)
+    #   spawn do
+    #     loop do
+    #       watcher.watch_changes do |file, status|
+    #         UI.message "File #{status}: #{file}"
+    #         Build.run(build_args)
 
-          sleep watch_interval
-        end
-      end
-    end
+    #         yield
+    #       end
+
+    #       sleep watch_interval
+    #     end
+    #   end
+    # end
   end
 end
