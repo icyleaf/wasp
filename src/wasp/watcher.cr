@@ -1,4 +1,10 @@
 module Wasp
+  enum WatchFileStatus
+    ADDED
+    CHANGED
+    DELETED
+  end
+
   class Watcher
     getter rules
 
@@ -7,12 +13,6 @@ module Wasp
 
       def initialize(@path : String, @mtime : Time)
       end
-    end
-
-    enum WatchFileStatus
-      ADDED
-      CHANGED
-      DELETED
     end
 
     @source_path : String
@@ -24,16 +24,19 @@ module Wasp
       @files = collect_files
     end
 
-    def start
-      loop do
-        watch_changes do |file, status|
-          puts "#{file} was #{status}"
+    def watching(interval = 1, &proc : String, WatchFileStatus ->)
+      spawn do
+        loop do
+          watching_files do |file, status|
+            proc.call file, status
+          end
         end
-        sleep 1
+
+        sleep interval
       end
     end
 
-    def watch_changes
+    def watching_files
       @files.each do |file, watch|
         if File.exists?(file)
           latest_file_mtime = file_mtime(file)

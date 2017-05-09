@@ -1,23 +1,28 @@
 module Wasp
   class LiveReloadHandler < HTTP::WebSocketHandler
-    def initialize(public_path : String, @port : Int32, &@proc : HTTP::WebSocket, HTTP::Server::Context ->)
+    def initialize(source_path : String, @port : Int32, &proc : String, Wasp::WatchFileStatus ->)
       @path = "/livereload"
-      @public_path = File.expand_path(public_path)
-      # @watcher = Watcher.new()
+      @source_path = File.expand_path(source_path)
+      @watcher = Watcher.new(@source_path)
 
-      # proc = ->(socket : HTTP::WebSocket, HTTP::Server::Context ->) {
-      #   puts typeof(socket)
+      @proc = ->(socket : HTTP::WebSocket, context : HTTP::Server::Context) do
+        socket.on_message do |message|
+          if message.includes?("\"command\":\"hello\"")
+            socket.send({
+              "command" => "hello",
+              "protocols" => [
+                "http://livereload.com/protocols/official-7"
+              ],
+              "serverName": "Wasp"
+            }.to_json)
+          end
+        end
 
+        # FIXME: block http server process
+        refreash_when_changes(socket, proc)
 
-      #   # watch_changes(socket)
-
-      #   # socket.on_close do
-      #   #   puts "Server: Closing socket"
-      #   # end
-      # }
-
-      # sssproc = ->(){}
-      # super(@path, )
+        return nil
+      end
     end
 
     def call(context)
@@ -36,9 +41,9 @@ module Wasp
       # inject <script> tag to the bottom of html page
       if is_dir_path
         file_path = if request_path == "/"
-                      File.join(@public_path, "index.html")
+                      File.join(@source_path, "public", "index.html")
                     else
-                      File.join(@public_path, request_path, "index.html")
+                      File.join(@source_path, "public", request_path, "index.html")
                     end
 
         end_body_tag = "</body>"
@@ -54,26 +59,27 @@ module Wasp
       super
     end
 
-    private def refresh_path(socket, file)
-      Wasp::Command::Build.run(@build_args)
-
-      socket.send({
-        "command" => "reload",
-        "path": file,
-        "liveCSS": true
-      }.to_json)
-    end
-
-    private def watch_changes(socket)
-      spawn do
-        loop do
-          @watcher.watch_changes do |file, status|
-            refresh_path(socket, file)
-          end
-
-          sleep 1
-        end
+    private def refreash_when_changes(socket, proc)
+      @watcher.watching do |file, status|
+        proc.call file, status
+        socket.send({
+          "command" => "reload",
+          "path": file,
+          "liveCSS": true
+        }.to_json)
       end
+
+      # spawn do
+      #   loop do
+      #     @watcher.watch_changes do |file, status|
+      #       puts file
+      #       proc.call file, status
+      #       refresh_path(socket, file)
+      #     end
+
+      #     sleep 1
+      #   end
+      # end
     end
   end
 end

@@ -38,40 +38,43 @@ class Wasp::Command
 
       if args.watch?
         source_path = File.expand_path(args.source)
-        watcher = Watcher.new(source_path)
+        # watcher = Watcher.new(source_path)
 
-        UI.verbose "Watch changes in '#{source_path}/{#{watcher.rules.join(",")}}'"
+        # UI.verbose "Watch changes in '#{source_path}/{#{watcher.rules.join(",")}}'"
 
-        livereload_hanlder = Wasp::LiveReloadHandler.new(public_path, port.to_i) do |ws|
-          ws.on_message do |message|
-            if message.includes?("\"command\":\"hello\"")
-              ws.send({
-                "command" => "hello",
-                "protocols" => [
-                  "http://livereload.com/protocols/official-7"
-                ],
-                "serverName": "Wasp"
-              }.to_json)
-            end
-          end
+        livereload_hanlder = Wasp::LiveReloadHandler.new(source_path, port.to_i) do |file, status|
+          # ws.on_message do |message|
+          #   if message.includes?("\"command\":\"hello\"")
+          #     ws.send({
+          #       "command" => "hello",
+          #       "protocols" => [
+          #         "http://livereload.com/protocols/official-7"
+          #       ],
+          #       "serverName": "Wasp"
+          #     }.to_json)
+          #   end
+          # end
+          UI.message "File #{status}: #{file}"
+          # Build.run(build_args)
 
-          spawn do
-            loop do
-              watcher.watch_changes do |file, status|
-                UI.message "File #{status}: #{file}"
-                Build.run(build_args)
+          # spawn do
+          #   loop do
+          #     watcher.watch_changes do |file, status|
+          #       UI.message "File #{status}: #{file}"
+          #       Build.run(build_args)
 
-                ws.send({
-                  "command" => "reload",
-                  "path": file,
-                  "liveCSS": true
-                }.to_json)
-              end
+          #       ws.send({
+          #         "command" => "reload",
+          #         "path": file,
+          #         "liveCSS": true
+          #       }.to_json)
+          #     end
 
-              sleep args.watchInterval.to_i
-            end
-          end
+          #     sleep args.watchInterval.to_i
+          #   end
+          # end
         end
+        # Fiber.yield
 
         handlers.insert(1, livereload_hanlder)
       end
