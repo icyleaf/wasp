@@ -24,13 +24,13 @@ This project is under development, DO NOT use it in production.
 - [x] site configurate (default)
 - [x] parse markdown to html
 - [x] live preview with web server
-- [ ] livereload after save content(settings/post/page)
+- [x] livereload after save content(settings/post/page)
 - [ ] theme template
 - [ ] admin panel
 - [ ] command line tool
   - [x] `config`: print site configuration
-  - [ ] `new site`: create a new site
-  - [ ] `new post`: create a new post
+  - [ ] `init`: initialize a new site
+  - [ ] `new`: create a new post
   - [ ] `search`: search post
   - [x] `build`: generate to static pages
   - [x] `server`: run a web server
