@@ -1,5 +1,5 @@
 module Wasp::FileSystem
-  class Metadata
+  class FrontMatter
 
     WASP_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
 
@@ -8,7 +8,7 @@ module Wasp::FileSystem
     end
 
     def initialize(text : String)
-      @metadata = if text.empty?
+      @inner = if text.empty?
                     {} of YAML::Type => YAML::Type
                   else
                     YAML.parse(text).as_h
@@ -16,19 +16,19 @@ module Wasp::FileSystem
     end
 
     def title
-      @metadata.fetch("title", "").to_s
+      @inner.fetch("title", "").to_s
     end
 
     def date
-      Time.parse(@metadata.fetch("date", "1970-01-01T00:00:00+08:00").to_s, WASP_DATE_FORMAT)
+      Time.parse(@inner.fetch("date", "1970-01-01T00:00:00+08:00").to_s, WASP_DATE_FORMAT)
     end
 
     def slug
-      @metadata.fetch("slug", "").to_s
+      @inner.fetch("slug", "").to_s
     end
 
     def tags
-      case object = @metadata.fetch("tags", "")
+      case object = @inner.fetch("tags", "")
       when String
         if object.to_s.empty?
           [] of YAML::Type
@@ -43,7 +43,7 @@ module Wasp::FileSystem
     end
 
     def categories
-      case object = @metadata.fetch("categories", "")
+      case object = @inner.fetch("categories", "")
       when String
         if object.to_s.empty?
           [] of YAML::Type
@@ -58,11 +58,11 @@ module Wasp::FileSystem
     end
 
     def draft?
-      @metadata.fetch("draft", "false") == "true"
+      @inner.fetch("draft", "false") == "true"
     end
 
     def as_h
-      @metadata.merge({
+      @inner.merge({
         "date" => date,
         "tags" => tags,
         "categories" => categories
@@ -70,10 +70,10 @@ module Wasp::FileSystem
     end
 
     macro method_missing(call)
-      @metadata.fetch({{ call.name.id.stringify }}, "")
+      @inner.fetch({{ call.name.id.stringify }}, "")
 
       # TODO: i don't know why this not works
-      # case object = @metadata.fetch({{ call.name.id.stringify }}, "")
+      # case object = @inner.fetch({{ call.name.id.stringify }}, "")
       # when Nil
       #   object.to_s
       # when String

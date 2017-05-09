@@ -29,7 +29,7 @@ module Wasp
       return @files if @files && !@files.empty?
 
       Dir.glob(File.join(contents_path, "**", "*.md")).each do |file|
-        @files << FileSystem::ContentFile.new(file, @site_config, contents_path)
+        @files << FileSystem::ContentFile.new(file, @site_config)
       end
 
       @files
