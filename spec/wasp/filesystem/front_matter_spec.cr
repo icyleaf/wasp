@@ -1,39 +1,39 @@
 require "../../spec_helper"
 
-private def empty_metadata
-  Wasp::FileSystem::Metadata.new("")
+private def empty_front_matter
+  Wasp::FileSystem::FrontMatter.new("")
 end
 
-describe Wasp::FileSystem::Metadata do
+describe Wasp::FileSystem::FrontMatter do
   describe "parse" do
     it "works with initialize with mpty string" do
-      empty_metadata.should be_a(Wasp::FileSystem::Metadata)
+      empty_front_matter.should be_a(Wasp::FileSystem::FrontMatter)
     end
 
     it "works with instance method" do
-      Wasp::FileSystem::Metadata.parse("").should be_a(Wasp::FileSystem::Metadata)
+      Wasp::FileSystem::FrontMatter.parse("").should be_a(Wasp::FileSystem::FrontMatter)
     end
 
     it "raise exception without YAML data" do
       expect_raises do
-        Wasp::FileSystem::Metadata.parse("not-yaml-data")
+        Wasp::FileSystem::FrontMatter.parse("not-yaml-data")
       end
     end
   end
 
   describe "gets empty" do
     it "return empty with title" do
-      m = empty_metadata
+      m = empty_front_matter
       m.title.should eq("")
     end
 
     it "return empty with missing key" do
-      m = empty_metadata
+      m = empty_front_matter
       m.not_found_key.should eq("")
     end
 
     it "return unix time since 1970" do
-      m = empty_metadata
+      m = empty_front_matter
       m.date.should be_a(Time)
       m.date.year.should eq(1970)
       m.date.month.should eq(1)
@@ -58,10 +58,10 @@ describe Wasp::FileSystem::Metadata do
       author: [icyleaf, "Wang Shen"]
       YAML
 
-      m = Wasp::FileSystem::Metadata.new(text)
+      m = Wasp::FileSystem::FrontMatter.new(text)
       m.title.should eq("Getting Started")
       m.slug.should eq("getting-started")
-      m.date.should eq(Time.parse("2017-05-01T15:00:31+08:00", Wasp::FileSystem::Metadata::WASP_DATE_FORMAT))
+      m.date.should eq(Time.parse("2017-05-01T15:00:31+08:00", Wasp::FileSystem::FrontMatter::WASP_DATE_FORMAT))
       m.categories.should eq(["Guide"])
       m.tags.should eq([ "documents", "install" ])
 
@@ -70,45 +70,45 @@ describe Wasp::FileSystem::Metadata do
     end
 
     it "tags accept string" do
-      m = Wasp::FileSystem::Metadata.new("---\ntags: crystal")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags: crystal")
       m.tags.should eq([ "crystal" ])
     end
 
     it "tags accept empty string" do
-      m = Wasp::FileSystem::Metadata.new("---\ntags: ")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags: ")
       m.tags.should eq([] of YAML::Type)
     end
 
     it "tags accept array" do
-      m = Wasp::FileSystem::Metadata.new("---\ntags: \n  - crystal\n  - \"ruby\"")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags: \n  - crystal\n  - \"ruby\"")
       m.tags.should eq(["crystal", "ruby"])
     end
 
     it "tags raise exception with hash" do
       expect_raises do
-        Wasp::FileSystem::Metadata.new("---\ntags:\n  crystal : Crystal").tags
+        Wasp::FileSystem::FrontMatter.new("---\ntags:\n  crystal : Crystal").tags
       end
     end
 
     it "categories accept string" do
-      m = Wasp::FileSystem::Metadata.new("---\ncategories: crystal")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: crystal")
       m.categories.should eq([ "crystal" ])
     end
 
     it "categories accept empty string" do
-      m = Wasp::FileSystem::Metadata.new("---\ncategories: ")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: ")
       m.categories.should eq([] of YAML::Type)
     end
 
     it "categories accept array" do
-      m = Wasp::FileSystem::Metadata.new("---\ncategories: \n  - crystal\n  - \"ruby\"")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: \n  - crystal\n  - \"ruby\"")
       m.categories.should be_a(Array(YAML::Type))
       m.categories.should eq([ "crystal", "ruby"])
     end
 
     it "categories raise exception with hash" do
       expect_raises do
-        Wasp::FileSystem::Metadata.new("---\ncategories:\n  crystal : Crystal").categories
+        Wasp::FileSystem::FrontMatter.new("---\ncategories:\n  crystal : Crystal").categories
       end
     end
   end
