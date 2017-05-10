@@ -3,11 +3,14 @@ jobs:
   build:
     docker:
       - image: crystallang/crystal
-        environment:
-          DOCS_PATH: "docs"
-          GIT_USER: "icyleaf"
-          GIT_EMAIL: "icyleaf.cn@gmail.com"
-          GIT_REPO: "git@github.com:icyleaf/wasp.git"
+    environment:
+      DOCS_PATH: "docs"
+      GIT_USER: "icyleaf"
+      GIT_EMAIL: "icyleaf.cn@gmail.com"
+      GIT_REPO: "git@github.com:icyleaf/wasp.git"
+    branches:
+      ignore:
+        - gh-pages
     working_directory: ~/wasp
     steps:
       - checkout
