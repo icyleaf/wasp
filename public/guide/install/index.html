@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="description" content=" Wasp is a Static Site Generator written in Crystal.">
+  <meta name="author" content="">
+  <title>Install Wasp | Hello Wasp</title>
+
+  <!-- CSS  -->
+<link href="https://icyleaf.github.io/wasp/static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+<link href="https://icyleaf.github.io/wasp/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+  <header>
+    <nav class="top-nav yellow darken-3">
+      <div class="container">
+        <div class="nav-wrapper"><a class="page-title">Install Wasp</a></div>
+      </div>
+    </nav>
+    <div class="container">
+      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+        <i class="material-icons">menu</i>
+       </a>
+    </div>
+    <ul id="nav-mobile" class="side-nav fixed">
+      <li class="logo" style="padding-bottom: 30px">
+        <a id="logo-container" href="https://icyleaf.github.io/wasp/" class="brand-logo">
+          <h3 style="text-align:center">Wasp</h3>
+        </a>
+      </li>
+
+     <li class="bold"><a class="collapsible-header active waves-effect waves-teal">About</a></li>
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Getting Startd</a>
+            <div class="collapsible-body">
+              <ul>
+                <li class="active yellow darken-3"><a href="#">Introduction</a></li>
+                <li><a href="#">Quick start</a></li>
+                <li><a href="#">Install</a></li>
+                <li><a href="#">Configuration</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m9 l10">
+          <div class="section scrollspy"><h1>H1</h1>
+
+<p>Paragraphs are separated by a blank line.</p>
+
+<p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and <code>monospace</code>. Itemized lists
+look like:</p>
+
+<ul><li>this one</li><li>that one</li><li>the other one</li></ul></ul>
+
+<p>Note that --- not considering the asterisk --- the actual text
+content starts at 4-columns in.</p>
+
+<blockquote>Block quotes are
+> written like so.
+>
+> They can span multiple paragraphs,
+> if you like.</blockquote>
+
+<p>Note again how the actual text starts at 4 columns in (4 characters
+from the left side). Here's a code sample:</p>
+
+<pre><code># Let me re-iterate ...
+for i in 1 .. 10 { do-something(i) }</code></pre>
+
+<p>As you probably guessed, indented 4 spaces. By the way, instead of
+indenting the block, you can use delimited blocks, if you like:</p>
+
+<pre><code>define foobar() {
+    print "Welcome to flavor country!";
+}</code></pre>
+
+<p>(which makes copying & pasting easier). You can optionally mark the
+delimited block for Pandoc to syntax highlight it:</p>
+
+<pre><code class='language-crystal'># A very basic HTTP server
+require "http/server"
+
+server = HTTP::Server.new(8080) do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world, got #{context.request.path}!"
+end
+
+puts "Listening on http://127.0.0.1:8080"
+server.listen</code></pre>
+
+<h2>H2</h2>
+
+<p>Here's a numbered list:</p>
+
+<ol><li>first item</li><li>second item</li><li>third item</li></ol>
+
+<h3>H3</h3>
+
+<p>Here's a todo task list:</p>
+
+<ul><li>[x] first task</li><li>[ ] second task</li><li>[ ] third task</li></ul>
+
+<h4>H4</h4>
+
+<h5>H5</h5></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!--  Scripts-->
+<script src="https://icyleaf.github.io/wasp/static/js/jquery.min.js"></script>
+<script src="https://icyleaf.github.io/wasp/static/js/materialize.min.js"></script>
+<script src="https://icyleaf.github.io/wasp/static/js/init.js"></script>
+</body>
+</html>
