@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: crystallang/crystal
         environment:
+          DOCS_PATH: "docs"
           GIT_USER: "icyleaf"
           GIT_EMAIL: "icyleaf.cn@gmail.com"
           GIT_REPO: "git@github.com:icyleaf/wasp.git"
@@ -21,12 +22,13 @@ jobs:
           command: crystal build --release -o wasp src/wasp.cr
       - run:
           name: "Generate static site"
-          command: ./wasp build --source docs --verbose
+          command: ./wasp build --source $DOCS_PATH --verbose
       - run:
           name: "Upload to gh-page"
           command: |
             git config --global user.name "$GIT_USER"
             git config --global user.email "$GIT_EMAIL"
+            cd $DOCS_PATH
             git init
             git remote add origin $GIT_REPO
             git fetch origin
