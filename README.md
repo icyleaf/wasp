@@ -1,6 +1,9 @@
 # Wasp
 
-![Status](https://img.shields.io/badge/status-development-yellow.svg) [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/icyleaf/wasp/blob/master/LICENSE) [![Dependency Status](https://shards.rocks/badge/github/icyleaf/wasp/status.svg)](https://shards.rocks/github/icyleaf/wasp) [![devDependency Status](https://shards.rocks/badge/github/icyleaf/wasp/dev_status.svg)](https://shards.rocks/github/icyleaf/wasp) [![CircleCI](https://circleci.com/gh/icyleaf/wasp/tree/master.svg?style=svg)](https://circleci.com/gh/icyleaf/wasp/tree/master)
+![Status](https://img.shields.io/badge/status-WIP-blue.svg)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/icyleaf/wasp/blob/master/LICENSE)
+[![Dependency Status](https://shards.rocks/badge/github/icyleaf/wasp/status.svg)](https://shards.rocks/github/icyleaf/wasp)
+[![Build Status](https://img.shields.io/circleci/project/github/icyleaf/wasp/master.svg?style=flat)](https://circleci.com/gh/icyleaf/wasp)
 
 A Static Site Generator written in [Crystal](http://crystal-lang.org/).
 
