@@ -18,10 +18,10 @@ jobs:
           command: crystal spec
       - run:
           name: "Build wasp"
-          command: crystal build --release src/wasp.cr -o bin/wasp
+          command: crystal build --release -o wasp src/wasp.cr
       - run:
           name: "Generate static site"
-          command: ./bin/wasp build --source docs --verbose
+          command: ./wasp build --source docs --verbose
       - run:
           name: "Upload to gh-page"
           command: |
