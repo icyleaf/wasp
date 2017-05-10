@@ -20,7 +20,7 @@ module Wasp::FileSystem
     end
 
     def date
-      Time.parse(@inner.fetch("date", "1970-01-01T00:00:00+08:00").to_s, WASP_DATE_FORMAT)
+      Time.parse(@inner.fetch("date", "1970-01-01T00:00:00+00:00").to_s, WASP_DATE_FORMAT)
     end
 
     def slug
