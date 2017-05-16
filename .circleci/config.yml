@@ -31,7 +31,7 @@ jobs:
           command: |
             git config --global user.name "$GIT_USER"
             git config --global user.email "$GIT_EMAIL"
-            cd $DOCS_PATH
+            cd "${DOCS_PATH}/public"
             git init
             git remote add origin $GIT_REPO
             git fetch origin
