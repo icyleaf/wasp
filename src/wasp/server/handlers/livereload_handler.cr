@@ -8,7 +8,6 @@ module Wasp
       # proc = ->(socket : HTTP::WebSocket, HTTP::Server::Context ->) {
       #   puts typeof(socket)
 
-
       #   # watch_changes(socket)
 
       #   # socket.on_close do
@@ -59,8 +58,8 @@ module Wasp
 
       socket.send({
         "command" => "reload",
-        "path": file,
-        "liveCSS": true
+        "path":      file,
+        "liveCSS":   true,
       }.to_json)
     end
 

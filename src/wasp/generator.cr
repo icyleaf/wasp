@@ -4,7 +4,7 @@ module Wasp
   class Generator
     DEFAULT_CONFIG_FILE   = "config.yml"
     DEFAULT_CONTENTS_PATH = "contents"
-    DEFAULT_LAYOUTS_PATH = "layouts"
+    DEFAULT_LAYOUTS_PATH  = "layouts"
     DEFAULT_PUBLIC_PATH   = "public"
     DEFAULT_STATIC_PATH   = "static"
 

@@ -63,10 +63,10 @@ module Wasp::FileSystem
 
     def as_h
       @front_matter.as_h.merge({
-        "summary" => summary,
-        "content" => @content,
+        "summary"   => summary,
+        "content"   => @content,
         "permalink" => permalink,
-        "link" => link,
+        "link"      => link,
       })
     end
 

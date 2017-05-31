@@ -1,6 +1,5 @@
 module Wasp::FileSystem
   class FrontMatter
-
     WASP_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
 
     def self.parse(text : String)
@@ -9,10 +8,10 @@ module Wasp::FileSystem
 
     def initialize(text : String)
       @inner = if text.empty?
-                    {} of YAML::Type => YAML::Type
-                  else
-                    YAML.parse(text).as_h
-                  end
+                 {} of YAML::Type => YAML::Type
+               else
+                 YAML.parse(text).as_h
+               end
     end
 
     def title
@@ -33,7 +32,7 @@ module Wasp::FileSystem
         if object.to_s.empty?
           [] of YAML::Type
         else
-          [ object.as(YAML::Type) ]
+          [object.as(YAML::Type)]
         end
       when Array
         object
@@ -48,7 +47,7 @@ module Wasp::FileSystem
         if object.to_s.empty?
           [] of YAML::Type
         else
-          [ object.as(YAML::Type) ]
+          [object.as(YAML::Type)]
         end
       when Array
         object
@@ -63,9 +62,9 @@ module Wasp::FileSystem
 
     def as_h
       @inner.merge({
-        "date" => date,
-        "tags" => tags,
-        "categories" => categories
+        "date"       => date,
+        "tags"       => tags,
+        "categories" => categories,
       })
     end
 

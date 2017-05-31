@@ -63,15 +63,15 @@ describe Wasp::FileSystem::FrontMatter do
       m.slug.should eq("getting-started")
       m.date.should eq(Time.parse("2017-05-01T15:00:31+08:00", Wasp::FileSystem::FrontMatter::WASP_DATE_FORMAT))
       m.categories.should eq(["Guide"])
-      m.tags.should eq([ "documents", "install" ])
+      m.tags.should eq(["documents", "install"])
 
-      m.author.should eq([ "icyleaf", "Wang Shen" ])
+      m.author.should eq(["icyleaf", "Wang Shen"])
       m.author.not_nil!.size.should eq(2) # because YAML::Type alias include Nil :(
     end
 
     it "tags accept string" do
       m = Wasp::FileSystem::FrontMatter.new("---\ntags: crystal")
-      m.tags.should eq([ "crystal" ])
+      m.tags.should eq(["crystal"])
     end
 
     it "tags accept empty string" do
@@ -92,7 +92,7 @@ describe Wasp::FileSystem::FrontMatter do
 
     it "categories accept string" do
       m = Wasp::FileSystem::FrontMatter.new("---\ncategories: crystal")
-      m.categories.should eq([ "crystal" ])
+      m.categories.should eq(["crystal"])
     end
 
     it "categories accept empty string" do
@@ -103,7 +103,7 @@ describe Wasp::FileSystem::FrontMatter do
     it "categories accept array" do
       m = Wasp::FileSystem::FrontMatter.new("---\ncategories: \n  - crystal\n  - \"ruby\"")
       m.categories.should be_a(Array(YAML::Type))
-      m.categories.should eq([ "crystal", "ruby"])
+      m.categories.should eq(["crystal", "ruby"])
     end
 
     it "categories raise exception with hash" do

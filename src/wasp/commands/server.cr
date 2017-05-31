@@ -26,10 +26,10 @@ class Wasp::Command
 
       port = args.port
       public_path = if args.source?
-                    File.join(args.source, "public")
-                  else
-                    "public"
-                  end
+                      File.join(args.source, "public")
+                    else
+                      "public"
+                    end
 
       handlers = [
         HTTP::ErrorHandler.new,
@@ -46,11 +46,11 @@ class Wasp::Command
           ws.on_message do |message|
             if message.includes?("\"command\":\"hello\"")
               ws.send({
-                "command" => "hello",
+                "command"   => "hello",
                 "protocols" => [
-                  "http://livereload.com/protocols/official-7"
+                  "http://livereload.com/protocols/official-7",
                 ],
-                "serverName": "Wasp"
+                "serverName": "Wasp",
               }.to_json)
             end
           end
@@ -63,8 +63,8 @@ class Wasp::Command
 
                 ws.send({
                   "command" => "reload",
-                  "path": file,
-                  "liveCSS": true
+                  "path":      file,
+                  "liveCSS":   true,
                 }.to_json)
               end
 
