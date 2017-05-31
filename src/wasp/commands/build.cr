@@ -38,38 +38,26 @@ class Wasp::Command
       UI.verbose "Generating static files to #{generator.public_path}"
 
       pages = generator.contents.map(&.as_h)
-      generator.contents.each do |content|
-        single_view = File.open(File.join(generator.layouts_path, "_default/single.html"))
-        single_template = Liquid::Template.parse(single_view)
 
-        single_ctx = Liquid::Context.new
-        single_ctx.set "site", generator.site_config
-        single_ctx.set "wasp", generator.app_info
-        single_ctx.set "pages", pages
-        single_ctx.set "page", content.as_h
+      global_ctx = Liquid::Context.new
+      global_ctx.set "site", generator.site_config
+      global_ctx.set "wasp", generator.app_info
+      global_ctx.set "pages", pages
+
+      write_template(File.join(generator.source_path, "layouts", "index.html"), File.join(generator.public_path, "index.html"), global_ctx)
+      write_template(File.join(generator.source_path, "layouts", "404.html"), File.join(generator.public_path, "404.html"), global_ctx)
+
+      generator.contents.each do |content|
+        single_template = template_file(File.join(generator.layouts_path, "_default/single.html"))
+        global_ctx.set "page", content.as_h
 
         single_output_path = File.join(generator.public_path, content.permalink)
 
         FileUtils.mkdir_p(single_output_path)
-        File.write(File.join(single_output_path, "index.html"), single_template.render(single_ctx))
+        File.write(File.join(single_output_path, "index.html"), single_template.render(global_ctx))
 
         UI.verbose("Write to #{File.join(single_output_path, "index.html")}")
       end
-
-      index_view = File.open(File.join(generator.source_path, "layouts", "index.html"))
-      index_template = Liquid::Template.parse(index_view)
-
-      index_ctx = Liquid::Context.new
-      index_ctx.set "site", generator.site_config
-      index_ctx.set "wasp", generator.app_info
-      index_ctx.set "pages", pages
-
-      File.write(File.join(generator.public_path, "index.html"), index_template.render(index_ctx))
-
-      not_found_view = File.open(File.join(generator.source_path, "layouts", "404.html"))
-      not_found_template = Liquid::Template.parse(not_found_view)
-
-      File.write(File.join(generator.public_path, "404.html"), not_found_template.render(index_ctx))
 
       UI.message("Total in #{(Time.now - start_time).total_milliseconds} ms")
     end
@@ -83,6 +71,16 @@ class Wasp::Command
       asset_src = File.join(source_path, Wasp::Generator::DEFAULT_STATIC_PATH)
       asset_desc = File.join(public_path, Wasp::Generator::DEFAULT_STATIC_PATH)
       FileUtils.cp_r(asset_src, asset_desc)
+    end
+
+    private def template_file(path)
+      file = File.open(path)
+      Liquid::Template.parse(file)
+    end
+
+    private def write_template(source_path, desc_path, context)
+      template = template_file(source_path)
+      File.write(desc_path, template.render(context))
     end
   end
 end

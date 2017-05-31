@@ -80,21 +80,5 @@ class Wasp::Command
       server = HTTP::Server.new(args.bindHost, port.to_i, handlers)
       server.listen
     end
-
-    # def watching_changes(source, build_args, watch_interval)
-    #   watcher = Watcher.new(source)
-    #   spawn do
-    #     loop do
-    #       watcher.watch_changes do |file, status|
-    #         UI.message "File #{status}: #{file}"
-    #         Build.run(build_args)
-
-    #         yield
-    #       end
-
-    #       sleep watch_interval
-    #     end
-    #   end
-    # end
   end
 end

@@ -13,18 +13,14 @@ Paragraphs are separated by a blank line.
 2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists
 look like:
 
-  * this one
-  * that one
-  * the other one
+* this one
+* that one
+* the other one
 
 Note that --- not considering the asterisk --- the actual text
 content starts at 4-columns in.
 
-> Block quotes are
-> written like so.
->
-> They can span multiple paragraphs,
-> if you like.
+> Block quotes are written like so. They can span multiple paragraphs, if you like.
 
 Note again how the actual text starts at 4 columns in (4 characters
 from the left side). Here's a code sample:
@@ -61,17 +57,11 @@ server.listen
 
 Here's a numbered list:
 
- 1. first item
- 2. second item
- 3. third item
+1. first item
+1. second item
+1. third item
 
 ### H3
-
-Here's a todo task list:
-
-- [x] first task
-- [ ] second task
-- [ ] third task
 
 #### H4
 

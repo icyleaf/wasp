@@ -30,21 +30,28 @@
         </a>
       </li>
 
-     <li class="bold"><a class="collapsible-header active waves-effect waves-teal">About</a></li>
-      <li class="no-padding">
-        <ul class="collapsible collapsible-accordion">
-          <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Getting Startd</a>
-            <div class="collapsible-body">
-              <ul>
-                <li class="active yellow darken-3"><a href="#">Introduction</a></li>
-                <li><a href="#">Quick start</a></li>
-                <li><a href="#">Install</a></li>
-                <li><a href="#">Configuration</a></li>
-              </ul>
-            </div>
+      {% for menu in site.menu %}
+        {% if menu.section %}
+          <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-teal">{{ menu.name }}</a>
+                <div class="collapsible-body">
+                    <ul>
+                      <li><a href="#">Introduction</a></li>
+                      <li><a href="#">Quick start</a></li>
+                      <li><a href="#">Configuration</a></li>
+                    </ul>
+                </div>
+              </li>
+            </ul>
           </li>
-        </ul>
-      </li>
+        {% else %}
+          <li class="bold">
+            <a href="{{ menu.url }}" class="collapsible-header waves-effect waves-teal">{{ menu.name }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
     </ul>
   </header>
 
