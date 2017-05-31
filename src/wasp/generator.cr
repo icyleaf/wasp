@@ -35,6 +35,14 @@ module Wasp
       @files
     end
 
+    def app_info
+      {
+        "name": Wasp::NAME,
+        "version": Wasp::VERSION,
+        "crystal": Crystal::VERSION
+      }
+    end
+
     {% for method in @type.constants %}
       def {{ method.stringify.downcase.split("_")[1..-1].join("_").id }}
         path_to({{ method.id }})
