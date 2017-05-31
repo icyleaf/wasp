@@ -138,10 +138,10 @@ module Wasp
 
     private def default_logger_formatter
       Logger::Formatter.new do |severity, datetime, progname, message, io|
-        if ENV.has_key?("WASP_HIDE_TIMESTAMP")
-          io << ""
-        else
+        if ENV.has_key?("WASP_SHOW_TIMESTAMP")
           io << "#{datetime.to_s("%Y-%m-%d %H:%M:%S")} "
+        else
+          io << ""
         end
 
         io << message

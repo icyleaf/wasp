@@ -13,7 +13,7 @@ module Wasp
 
     def run
       UI.instance.logger.level = Logger::DEBUG if args.verbose?
-      ENV["WASP_HIDE_TIMESTAMP"] = "true" unless args.verboseLog?
+      ENV["WASP_SHOW_TIMESTAMP"] = "true" if args.verboseLog?
     end
   end
 
