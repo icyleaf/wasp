@@ -20,7 +20,6 @@ class Wasp::Command
 
       source_path = File.expand_path(args.source)
 
-
       # step 1: create public directory if not exists.
       # step 2: clean previous old files if exist public directory
       # step 3: copy assets
@@ -70,13 +69,13 @@ class Wasp::Command
     end
 
     private def copy_assets(source_path)
-      public_path = File.join(source_path, DEFAULT_PUBLIC_PATH)
+      public_path = File.join(source_path, Wasp::Generator::DEFAULT_PUBLIC_PATH)
 
       FileUtils.rm_rf(public_path) if Dir.exists?(public_path)
       FileUtils.mkdir_p(public_path)
 
-      asset_src = File.join(source_path, DEFAULT_ASSETS_PATH)
-      asset_desc = File.join(public_path, DEFAULT_ASSETS_PATH)
+      asset_src = File.join(source_path, Wasp::Generator::DEFAULT_STATIC_PATH)
+      asset_desc = File.join(public_path, Wasp::Generator::DEFAULT_STATIC_PATH)
       FileUtils.cp_r(asset_src, asset_desc)
     end
   end
