@@ -51,7 +51,8 @@ module Wasp
         end
       end
 
-      call_next(context)
+      return call_next(context) unless context.request.path.not_nil! == @path
+      super
     end
   end
 end
