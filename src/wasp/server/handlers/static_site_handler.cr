@@ -43,13 +43,19 @@ module Wasp
       end
 
       if File.exists?(file_path)
-        context.response.content_type = mime_type(file_path)
-        context.response.content_length = File.size(file_path)
-        File.open(file_path) do |file|
-          IO.copy(file, context.response)
-        end
+        html_response(context, file_path)
+      elsif File.exists?(File.join(@public_dir, "404.html"))
+        html_response(context, File.join(@public_dir, "404.html"))
       else
         call_next(context)
+      end
+    end
+
+    private def html_response(context, html_file)
+      context.response.content_type = mime_type(html_file)
+      context.response.content_length = File.size(html_file)
+      File.open(html_file) do |file|
+        IO.copy(file, context.response)
       end
     end
 

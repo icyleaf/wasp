@@ -32,7 +32,6 @@ class Wasp::Command
                     end
 
       handlers = [
-        HTTP::ErrorHandler.new,
         Wasp::StaticSiteHandler.new(public_path),
       ] of HTTP::Handler
 
@@ -73,7 +72,7 @@ class Wasp::Command
           end
         end
 
-        handlers.insert(1, livereload_hanlder)
+        handlers.insert(0, livereload_hanlder)
       end
 
       UI.message "Web Server is running at http://localhost:#{args.port}/ (bind address #{args.bindHost})"

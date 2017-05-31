@@ -37,13 +37,15 @@ class Wasp::Command
       UI.verbose "Using config file: #{generator.source_path}"
       UI.verbose "Generating static files to #{generator.public_path}"
 
-      posts = [] of Hash(Array(YAML::Type) | Hash(YAML::Type, YAML::Type) | String | Nil, Array(YAML::Type) | Hash(YAML::Type, YAML::Type) | String | Time | Nil)
+      pages = generator.contents.map(&.as_h)
       generator.contents.each do |content|
         single_view = File.open(File.join(generator.layouts_path, "_default/single.html"))
         single_template = Liquid::Template.parse(single_view)
 
         single_ctx = Liquid::Context.new
         single_ctx.set "site", generator.site_config
+        single_ctx.set "wasp", generator.app_info
+        single_ctx.set "pages", pages
         single_ctx.set "page", content.as_h
 
         single_output_path = File.join(generator.public_path, content.permalink)
@@ -52,8 +54,6 @@ class Wasp::Command
         File.write(File.join(single_output_path, "index.html"), single_template.render(single_ctx))
 
         UI.verbose("Write to #{File.join(single_output_path, "index.html")}")
-
-        posts << content.as_h
       end
 
       index_view = File.open(File.join(generator.source_path, "layouts", "index.html"))
@@ -61,9 +61,15 @@ class Wasp::Command
 
       index_ctx = Liquid::Context.new
       index_ctx.set "site", generator.site_config
-      index_ctx.set "posts", posts
+      index_ctx.set "wasp", generator.app_info
+      index_ctx.set "pages", pages
 
       File.write(File.join(generator.public_path, "index.html"), index_template.render(index_ctx))
+
+      not_found_view = File.open(File.join(generator.source_path, "layouts", "404.html"))
+      not_found_template = Liquid::Template.parse(not_found_view)
+
+      File.write(File.join(generator.public_path, "404.html"), not_found_template.render(index_ctx))
 
       UI.message("Total in #{(Time.now - start_time).total_milliseconds} ms")
     end

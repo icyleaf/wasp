@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="description" content=" {{ site.description }}">
+  <meta name="author" content="{{ site.author }}">
+
+  <title>{{ site.title }}</title>
+
+  {% include "partial/header.html" %}
+</head>
+<body>
+  <header>
+    <nav class="top-nav yellow darken-3">
+      <div class="container">
+        <div class="nav-wrapper"><a class="page-title">404</a></div>
+      </div>
+    </nav>
+    <div class="container">
+      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+        <i class="material-icons">menu</i>
+       </a>
+    </div>
+    <ul id="nav-mobile" class="side-nav fixed">
+      <li class="logo" style="padding-bottom: 30px">
+        <a id="logo-container" href="{{ site.base_url }}" class="brand-logo">
+          <h3 style="text-align:center">Wasp</h3>
+        </a>
+      </li>
+
+      {% for menu in site.menu %}
+        {% if menu.section %}
+          <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+              <li class="bold"><a class="collapsible-header active waves-effect waves-teal">{{ menu.name }}</a></li>
+              <div class="collapsible-body">
+                  <ul>
+                    <li class="active yellow darken-3"><a href="#">Introduction</a></li>
+                    <li><a href="#">Quick start</a></li>
+                    <li><a href="#">Install</a></li>
+                    <li><a href="#">Configuration</a></li>
+                  </ul>
+              </div>
+            </ul>
+          </li>
+        {% else %}
+          <li class="bold">
+            <a href="{{ menu.url }}" class="collapsible-header waves-effect waves-teal">{{ menu.name }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </header>
+
+  <main>
+      <div class="section" id="index-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m9">
+            <h1 class="header center-on-small-only">404</h1>
+            <h4 class ="light red-text text-lighten-4 center-on-small-only">Page not found.</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  {% include "partial/footer.html" %}
+</body>
+</html>

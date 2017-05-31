@@ -43,36 +43,15 @@ module Wasp
         end_body_tag = "</body>"
         liverelaod_template = "<script data-no-instant>document.write('<script src=\"/livereload.js?port=#{@port.to_s}&snipver=1\"></' + 'script>')</script>\n</body>"
 
-        content = File.read(file_path)
-        context.response.content_type = "text/html"
-        context.response.content_length = File.size(file_path)
-        return context.response.print content.gsub(end_body_tag, liverelaod_template)
-      end
-
-      return call_next(context) unless context.request.path.not_nil! == @path
-      super
-    end
-
-    private def refresh_path(socket, file)
-      Wasp::Command::Build.run(@build_args)
-
-      socket.send({
-        "command" => "reload",
-        "path":      file,
-        "liveCSS":   true,
-      }.to_json)
-    end
-
-    private def watch_changes(socket)
-      spawn do
-        loop do
-          @watcher.watch_changes do |file, status|
-            refresh_path(socket, file)
-          end
-
-          sleep 1
+        if File.exists?(file_path)
+          content = File.read(file_path)
+          context.response.content_type = "text/html"
+          context.response.content_length = File.size(file_path)
+          return context.response.print content.gsub(end_body_tag, liverelaod_template)
         end
       end
+
+      call_next(context)
     end
   end
 end
