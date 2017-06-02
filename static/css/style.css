@@ -17,6 +17,12 @@ header, main {
 
 p {
   line-height: 2rem;
+  color: rgba(0,0,0,0.71);
+}
+
+blockquote {
+  color: rgba(0,0,0,0.71);
+  border-left: 5px solid #f9a825;
 }
 
 .button-collapse {
@@ -47,6 +53,16 @@ p {
   #index-banner .section {
     top: 0;
   }
+}
+
+/*#content-body h1, #content-body h2, #content-body h3, #content-body h4, #content-body h5 {
+  color: #f9a825;
+}*/
+
+#content-body p {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 30px;
 }
 
 .icon-block {

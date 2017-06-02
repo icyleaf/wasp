@@ -6,8 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
   <meta name="description" content=" Wasp is a Static Site Generator written in Crystal.">
   <meta name="author" content="">
-
-  <title>Wasp</title>
+  <title>Installing Wasp | Wasp</title>
 
   <!-- CSS  -->
 <link href="https://icyleaf.github.io/wasp/static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -19,6 +18,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+
 <body>
   <header>
     <div class="container">
@@ -54,19 +54,26 @@
       <div class="container">
         <div class="row">
           <div class="col s12 m9">
-            <h1 class="header white-text center-on-small-only">404</h1>
-            <h4 class ="light yellow-text text-darken-1 center-on-small-only">Page not found.</h4>
+            <h1 class="header white-text center-on-small-only">Installing Wasp</h1>
+            <!--<h4 class ="light yellow-text text-darken-1 center-on-small-only"></h4>-->
           </div>
         </div>
       </div>
     </div>
     <div class="container">
-      <div class="col s12 m9 l10">
-        <div class="section scrollspy">
-          <h2 class="header yellow-text text-darken-3">Are You Lost?</h2>
-            <p class="caption">
-              The page you were looking for does not exist. If you think this is a mistake and one of our pages has gone missing.
-            </p>
+      <div class="row">
+        <div class="col s12">
+          <div class="section scrollspy" id="content-body"><p>We can't provide pre-built binaries currently, Wasp is written in Crystal with support for multiple platforms except Windows.</p>
+
+<h2>Installing from source</h2>
+
+<blockquote>Preqeuisite tools for downloading and building source code</blockquote>
+
+<ul><li><a href="http://git-scm.com/">Git</a></li><li><a href="https://crystal-lang.org/">Crystal</a> 0.22.0+</li></ul>
+
+<pre><code>$ git clone https://github.com/icyleaf/wasp.git && cd wasp
+$ make build
+$ sudo cp bin/wasp /usr/local/bin/wasp</code></pre></div>
         </div>
       </div>
     </div>

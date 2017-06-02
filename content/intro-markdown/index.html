@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
   <meta name="description" content=" Wasp is a Static Site Generator written in Crystal.">
   <meta name="author" content="">
-  <title>Install Wasp | Wasp</title>
+  <title>Intro Markdown | Wasp</title>
 
   <!-- CSS  -->
 <link href="https://icyleaf.github.io/wasp/static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -21,62 +21,58 @@
 
 <body>
   <header>
-    <nav class="top-nav yellow darken-3">
-      <div class="container">
-        <div class="nav-wrapper"><a class="page-title">Install Wasp</a></div>
-      </div>
-    </nav>
     <div class="container">
-      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
-        <i class="material-icons">menu</i>
-       </a>
-    </div>
-    <ul id="nav-mobile" class="side-nav fixed">
-      <li class="logo" style="padding-bottom: 30px">
-        <a id="logo-container" href="https://icyleaf.github.io/wasp/" class="brand-logo">
-          <h3 style="text-align:center">Wasp</h3>
-        </a>
-      </li>
+  <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+    <i class="material-icons">menu</i>
+    </a>
+</div>
+<ul id="nav-mobile" class="side-nav fixed">
+  <li class="logo" style="padding-bottom: 30px">
+    <a id="logo-container" href="https://icyleaf.github.io/wasp/" class="brand-logo">
+      <h3 style="text-align:center">Wasp</h3>
+    </a>
+  </li>
 
-      
-        
-          <li class="bold">
-            <a href="/about/" class="collapsible-header waves-effect waves-teal">About Wasp</a>
-          </li>
-        
-      
-        
-          <li class="no-padding">
-            <ul class="collapsible collapsible-accordion">
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal">Getting Started</a>
-                <div class="collapsible-body">
-                    <ul>
-                      <li><a href="#">Introduction</a></li>
-                      <li><a href="#">Quick start</a></li>
-                      <li><a href="#">Configuration</a></li>
-                    </ul>
-                </div>
-              </li>
-            </ul>
-          </li>
-        
-      
-    </ul>
+  
+  <li class="bold">
+    <a href="https://icyleaf.github.io/wasp/getting-started/about" class="collapsible-header waves-effect waves-teal">About</a>
+  </li>
+  
+  <li class="bold">
+    <a href="https://icyleaf.github.io/wasp/getting-started/install" class="collapsible-header waves-effect waves-teal">Installing Wasp</a>
+  </li>
+  
+  <li class="bold">
+    <a href="https://icyleaf.github.io/wasp/content/intro-markdown" class="collapsible-header waves-effect waves-teal">Intro Markdown</a>
+  </li>
+  
+</ul>
   </header>
 
   <main>
+    <div class="section yellow darken-3" id="index-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m9">
+            <h1 class="header white-text center-on-small-only">Intro Markdown</h1>
+            <!--<h4 class ="light yellow-text text-darken-1 center-on-small-only"></h4>-->
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col s12 m9 l10">
-          <div class="section scrollspy"><h1>H1</h1>
+        <div class="col s12">
+          <div class="section scrollspy" id="content-body"><p>Wasp use Crystal <a href="https://crystal-lang.org/api/0.22.0/Markdown.html">Markdown</a> standard library. it is not support <a href="https://github.github.com/gfm/">GFM</a> or <a href="http://commonmark.org/">CommonMark</a>.</p>
+
+<h1>H1</h1>
 
 <p>Paragraphs are separated by a blank line.</p>
 
 <p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and <code>monospace</code>. Itemized lists
 look like:</p>
 
-<ul><li>this one</li><li>that one</li><li>the other one</li></ul>
+<ul><li>this one</li><li>that one</li><li>the other one</li></ul></ul>
 
 <p>Note that --- not considering the asterisk --- the actual text
 content starts at 4-columns in.</p>
@@ -118,9 +114,17 @@ server.listen</code></pre>
 
 <h3>H3</h3>
 
+<p>Link to <a href="http://icyleaf.com">my blog</a>, and show a image:</p>
+
+<p><img src="/static/background3.jpg" alt="image"/></p>
+
 <h4>H4</h4>
 
-<h5>H5</h5></div>
+<p>It not support HTML code.</p>
+
+<h5>H5</h5>
+
+<p>and footprint.</p></div>
         </div>
       </div>
     </div>
