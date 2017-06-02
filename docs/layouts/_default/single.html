@@ -13,53 +13,24 @@
 
 <body>
   <header>
-    <nav class="top-nav yellow darken-3">
-      <div class="container">
-        <div class="nav-wrapper"><a class="page-title">{{ page.title }}</a></div>
-      </div>
-    </nav>
-    <div class="container">
-      <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
-        <i class="material-icons">menu</i>
-       </a>
-    </div>
-    <ul id="nav-mobile" class="side-nav fixed">
-      <li class="logo" style="padding-bottom: 30px">
-        <a id="logo-container" href="{{ site.base_url }}" class="brand-logo">
-          <h3 style="text-align:center">Wasp</h3>
-        </a>
-      </li>
-
-      {% for menu in site.menu %}
-        {% if menu.section %}
-          <li class="no-padding">
-            <ul class="collapsible collapsible-accordion">
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-teal">{{ menu.name }}</a>
-                <div class="collapsible-body">
-                    <ul>
-                      <li><a href="#">Introduction</a></li>
-                      <li><a href="#">Quick start</a></li>
-                      <li><a href="#">Configuration</a></li>
-                    </ul>
-                </div>
-              </li>
-            </ul>
-          </li>
-        {% else %}
-          <li class="bold">
-            <a href="{{ menu.url }}" class="collapsible-header waves-effect waves-teal">{{ menu.name }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+    {% include "../partial/menu.html" %}
   </header>
 
   <main>
+    <div class="section yellow darken-3" id="index-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m9">
+            <h1 class="header white-text center-on-small-only">{{ page.title }}</h1>
+            <!--<h4 class ="light yellow-text text-darken-1 center-on-small-only"></h4>-->
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
-        <div class="col s12 m9 l10">
-          <div class="section scrollspy">{{ page.content }}</div>
+        <div class="col s12">
+          <div class="section scrollspy" id="content-body">{{ page.content }}</div>
         </div>
       </div>
     </div>

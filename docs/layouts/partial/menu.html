@@ -1,0 +1,18 @@
+<div class="container">
+  <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+    <i class="material-icons">menu</i>
+    </a>
+</div>
+<ul id="nav-mobile" class="side-nav fixed">
+  <li class="logo" style="padding-bottom: 30px">
+    <a id="logo-container" href="{{ site.base_url }}" class="brand-logo">
+      <h3 style="text-align:center">Wasp</h3>
+    </a>
+  </li>
+
+  {% for menu in pages %}
+  <li class="bold">
+    <a href="{{ menu.link }}" class="collapsible-header waves-effect waves-teal">{{ menu.title }}</a>
+  </li>
+  {% endfor %}
+</ul>

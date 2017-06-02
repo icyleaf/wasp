@@ -1,11 +1,10 @@
 ---
-title: "Intro Wasp"
-slug: "intro"
-date: "2017-03-09T21:34:56+08:00"
-categories:
-  - Guide
-
+title: "Intro Markdown"
+slug: "intro-markdown"
+date: "2017-05-03T15:00:31+08:00"
 ---
+
+Wasp use Crystal [Markdown](https://crystal-lang.org/api/0.22.0/Markdown.html) standard library. it is not support [GFM](https://github.github.com/gfm/) or [CommonMark](http://commonmark.org/).
 
 # H1
 
@@ -21,11 +20,7 @@ look like:
 Note that --- not considering the asterisk --- the actual text
 content starts at 4-columns in.
 
-> Block quotes are
-> written like so.
->
-> They can span multiple paragraphs,
-> if you like.
+> Block quotes are written like so. They can span multiple paragraphs, if you like.
 
 Note again how the actual text starts at 4 columns in (4 characters
 from the left side). Here's a code sample:
@@ -68,12 +63,14 @@ Here's a numbered list:
 
 ### H3
 
-Here's a todo task list:
+Link to [my blog](http://icyleaf.com), and show a image:
 
-- [x] first task
-- [ ] second task
-- [ ] third task
+![image](/static/background3.jpg)
 
 #### H4
 
+It not support HTML code.
+
 ##### H5
+
+and footprint.

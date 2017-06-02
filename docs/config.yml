@@ -9,9 +9,3 @@ base_url: "https://icyleaf.github.io/wasp/"
 permalink: ":section/:title/"
 ugly_url: false
 
-menu:
-  - name: About Wasp
-    url: "/about/"
-  - name: Getting Started
-    section: true
-    url: "/getting-started/"

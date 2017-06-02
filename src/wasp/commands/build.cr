@@ -1,5 +1,4 @@
 require "file_utils"
-require "markdown"
 require "liquid"
 require "yaml"
 
@@ -37,7 +36,7 @@ class Wasp::Command
       UI.verbose "Using config file: #{generator.source_path}"
       UI.verbose "Generating static files to #{generator.public_path}"
 
-      pages = generator.contents.map(&.as_h)
+      pages = generator.contents.sort_by(&.date).reverse.map(&.as_h)
 
       global_ctx = Liquid::Context.new
       global_ctx.set "site", generator.site_config
