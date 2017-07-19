@@ -12,6 +12,10 @@ shards:
     github: icyleaf/liquid.cr
     commit: 1b7c4ed58177d77e7694e886a4aafc2ca545ae0a
 
+  markd:
+    github: icyleaf/markd
+    commit: 2432d524f95ed2c3bc8f838241a39e16d2d371dd
+
   optarg:
     github: mosop/optarg
     version: 0.5.7

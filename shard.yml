@@ -12,6 +12,9 @@ dependencies:
   cli:
     github: mosop/cli
     branch: master
+  markd:
+    github: icyleaf/markd
+    branch: master
   liquid:
     github: icyleaf/liquid.cr
     branch: master

@@ -1,4 +1,4 @@
-require "markdown"
+require "markd"
 require "yaml"
 require "uri"
 
@@ -21,7 +21,7 @@ module Wasp::FileSystem
         raise MissingFrontMatterError.new("Not found metadata in " + @file)
       end
 
-      @content = Markdown.to_html(text.gsub(FRONT_MATTER_REGEX, ""))
+      @content = Markd.to_html(text.gsub(FRONT_MATTER_REGEX, ""))
     end
 
     def section
