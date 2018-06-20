@@ -8,7 +8,6 @@ date: "2017-06-02T15:00:31+08:00"
 
 ![Status](https://img.shields.io/badge/status-WIP-blue.svg)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/icyleaf/wasp/blob/master/LICENSE)
-[![Dependency Status](https://shards.rocks/badge/github/icyleaf/wasp/status.svg)](https://shards.rocks/github/icyleaf/wasp)
 [![Build Status](https://img.shields.io/circleci/project/github/icyleaf/wasp/master.svg?style=flat)](https://circleci.com/gh/icyleaf/wasp)
 
 A Static Site Generator written in [Crystal](http://crystal-lang.org/).
@@ -30,25 +29,6 @@ Watch changes in '/Users/icyleaf/Development/crystal/wasp/docs/{config.yml,conte
 Web Server is running at http://localhost:8624/ (bind address 127.0.0.1)
 Press Ctrl+C to stop
 ```
-
-## Todo
-
-This project is under development, DO NOT use it in production.
-
-- [x] site structures
-- [x] site configurate (default)
-- [x] parse markdown to html
-- [x] live preview with web server
-- [x] livereload after save content(settings/post/page)
-- [ ] theme template
-- [ ] admin panel
-- [ ] command line tool
-  - [x] `config`: print site configuration
-  - [ ] `init`: initialize a new site
-  - [ ] `new`: create a new post
-  - [ ] `search`: search post
-  - [x] `build`: generate to static pages
-  - [x] `server`: run a web server
 
 ## Inspires
 
