@@ -7,7 +7,7 @@ class Wasp::Command
     def run
       super
 
-      UI.important "To be continue"
+     Terminal::UI.important "To be continue"
     end
   end
 end

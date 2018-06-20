@@ -1,5 +1,4 @@
 require "markd"
-require "yaml"
 require "uri"
 
 module Wasp::FileSystem
@@ -10,7 +9,7 @@ module Wasp::FileSystem
 
     FRONT_MATTER_REGEX = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
 
-    def initialize(file : String, @site_config : Hash(YAML::Type, YAML::Type))
+    def initialize(file : String, @site_config : Hash(String, YAML::Any))
       @file = File.expand_path(file)
       @name = File.basename(@file)
 
@@ -40,7 +39,7 @@ module Wasp::FileSystem
     end
 
     def link(ugly_url = "false")
-      @site_config["ugly_url"] ||= ugly_url.to_s
+      @site_config["ugly_url"] ||= YAML::Any.new(ugly_url.to_s)
       File.join(@site_config["base_url"].to_s, permalink(@site_config["ugly_url"]))
     end
 

@@ -39,7 +39,8 @@ class Wasp::Command
         source_path = File.expand_path(args.source)
         watcher = Watcher.new(source_path)
 
-        UI.verbose "Watch changes in '#{source_path}/{#{watcher.rules.join(",")}}'"
+        puts
+        Terminal::UI.verbose "Watch changes in '#{source_path}/{#{watcher.rules.join(",")}}'"
 
         livereload_hanlder = Wasp::LiveReloadHandler.new(public_path, port.to_i) do |ws|
           ws.on_message do |message|
@@ -57,7 +58,7 @@ class Wasp::Command
           spawn do
             loop do
               watcher.watch_changes do |file, status|
-                UI.message "File #{status}: #{file}"
+                Terminal::UI.message "File #{status}: #{file}"
                 Build.run(build_args)
 
                 ws.send({
@@ -75,10 +76,10 @@ class Wasp::Command
         handlers.insert(0, livereload_hanlder)
       end
 
-      UI.message "Web Server is running at http://localhost:#{args.port}/ (bind address #{args.bindHost})"
-      UI.message "Press Ctrl+C to stop"
-      server = HTTP::Server.new(args.bindHost, port.to_i, handlers)
-      server.listen
+      Terminal::UI.message "Web Server is running at http://localhost:#{args.port}/ (bind address #{args.bindHost})"
+      Terminal::UI.message "Press Ctrl+C to stop"
+      server = HTTP::Server.new(handlers: handlers)
+      server.listen args.bindHost, port.to_i
     end
   end
 end

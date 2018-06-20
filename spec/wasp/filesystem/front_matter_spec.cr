@@ -6,7 +6,7 @@ end
 
 describe Wasp::FileSystem::FrontMatter do
   describe "parse" do
-    it "works with initialize with mpty string" do
+    it "works with initialize with empty string" do
       empty_front_matter.should be_a(Wasp::FileSystem::FrontMatter)
     end
 
@@ -15,7 +15,7 @@ describe Wasp::FileSystem::FrontMatter do
     end
 
     it "raise exception without YAML data" do
-      expect_raises do
+      expect_raises Wasp::FrontMatterParseError do
         Wasp::FileSystem::FrontMatter.parse("not-yaml-data")
       end
     end
@@ -76,7 +76,7 @@ describe Wasp::FileSystem::FrontMatter do
 
     it "tags accept empty string" do
       m = Wasp::FileSystem::FrontMatter.new("---\ntags: ")
-      m.tags.should eq([] of YAML::Type)
+      m.tags.should eq([] of YAML::Any)
     end
 
     it "tags accept array" do
@@ -84,10 +84,9 @@ describe Wasp::FileSystem::FrontMatter do
       m.tags.should eq(["crystal", "ruby"])
     end
 
-    it "tags raise exception with hash" do
-      expect_raises do
-        Wasp::FileSystem::FrontMatter.new("---\ntags:\n  crystal : Crystal").tags
-      end
+    it "tags returns empty without string or array" do
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags:\n  crystal : Crystal")
+      m.tags.should eq([] of YAML::Any)
     end
 
     it "categories accept string" do
@@ -97,19 +96,17 @@ describe Wasp::FileSystem::FrontMatter do
 
     it "categories accept empty string" do
       m = Wasp::FileSystem::FrontMatter.new("---\ncategories: ")
-      m.categories.should eq([] of YAML::Type)
+      m.categories.should eq([] of YAML::Any)
     end
 
     it "categories accept array" do
       m = Wasp::FileSystem::FrontMatter.new("---\ncategories: \n  - crystal\n  - \"ruby\"")
-      m.categories.should be_a(Array(YAML::Type))
       m.categories.should eq(["crystal", "ruby"])
     end
 
-    it "categories raise exception with hash" do
-      expect_raises do
-        Wasp::FileSystem::FrontMatter.new("---\ncategories:\n  crystal : Crystal").categories
-      end
+    it "categories returns empty without string or array" do
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories:\n  crystal : Crystal")
+      m.categories.should eq([] of YAML::Any)
     end
   end
 end

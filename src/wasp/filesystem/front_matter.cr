@@ -2,15 +2,21 @@ module Wasp::FileSystem
   class FrontMatter
     WASP_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
 
+    @inner : Hash(YAML::Any, YAML::Any)
+
     def self.parse(text : String)
       self.new(text)
     end
 
     def initialize(text : String)
       @inner = if text.empty?
-                 {} of YAML::Type => YAML::Type
+                 {} of YAML::Any => YAML::Any
                else
-                 YAML.parse(text).as_h
+                 begin
+                   YAML.parse(text).as_h
+                 rescue TypeCastError
+                   raise FrontMatterParseError.new("can not parse front matter from yaml string")
+                 end
                end
     end
 
@@ -27,32 +33,24 @@ module Wasp::FileSystem
     end
 
     def tags
-      case object = @inner.fetch("tags", "")
-      when String
-        if object.to_s.empty?
-          [] of YAML::Type
-        else
-          [object.as(YAML::Type)]
-        end
-      when Array
+      case object = @inner.fetch("tags", YAML::Any.new(""))
+      when .as_s?
+        [object]
+      when .as_a?
         object
       else
-        raise Error.new("tags only accepts String and Array not #{object.class.name}")
+        [] of YAML::Any
       end
     end
 
     def categories
-      case object = @inner.fetch("categories", "")
-      when String
-        if object.to_s.empty?
-          [] of YAML::Type
-        else
-          [object.as(YAML::Type)]
-        end
-      when Array
+      case object = @inner.fetch("categories", YAML::Any.new(""))
+      when .as_s?
+        [object]
+      when .as_a?
         object
       else
-        raise Error.new("categories only accepts String and Array not #{object.class.name}")
+        [] of YAML::Any
       end
     end
 
@@ -76,13 +74,13 @@ module Wasp::FileSystem
       # when Nil
       #   object.to_s
       # when String
-      #   object.as(YAML::Type)
+      #   object.as(YAML::Any)
       # when Array
       #   puts {{ call.name.id.stringify }}
       #   puts object.class
-      #   object.as(Array(YAML::Type))
+      #   object.as(Array(YAML::Any))
       # when Hash
-      #   object.as(Hash(YAML::Type, YAML::Type))
+      #   object.as(Hash(YAML::Any, YAML::Any))
       # else
       #   object
       # end

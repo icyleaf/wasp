@@ -1,4 +1,5 @@
 require "cli"
+require "terminal-ui"
 
 module Wasp
   abstract class GlobalOptions < Cli::Command
@@ -12,7 +13,7 @@ module Wasp
     end
 
     def run
-      UI.instance.logger.level = Logger::DEBUG if args.verbose?
+      Terminal::UI.instance.logger.level = Logger::DEBUG if args.verbose?
       ENV["WASP_SHOW_TIMESTAMP"] = "true" if args.verboseLog?
     end
   end

@@ -7,7 +7,7 @@ class Wasp::Command
     def run
       super
 
-      puts "#{Wasp::NAME} - #{Wasp::DESC} v#{Wasp::VERSION} in Crystal v#{Crystal::VERSION}"
+      Terminal::UI.message "#{Wasp::NAME} - #{Wasp::DESC} v#{Wasp::VERSION} in Crystal v#{Crystal::VERSION}"
     end
   end
 end

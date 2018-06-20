@@ -76,7 +76,7 @@ module Wasp
     end
 
     private def file_mtime(file)
-      File.stat(file).mtime
+      File.info(file).modification_time
     end
   end
 end

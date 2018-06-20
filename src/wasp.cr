@@ -1,5 +1,5 @@
+require "./wasp/ext/*"
 require "./wasp/*"
-require "./wasp/helpers/*"
 
 unless ENV.has_key?("WASP_SPEC_RUNNING")
   args = if ARGV.size > 0

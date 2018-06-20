@@ -1,8 +1,8 @@
 require "./filesystem/*"
+require "yaml"
 
 module Wasp
   class Generator
-    DEFAULT_CONFIG_FILE   = "config.yml"
     DEFAULT_CONTENTS_PATH = "contents"
     DEFAULT_LAYOUTS_PATH  = "layouts"
     DEFAULT_PUBLIC_PATH   = "public"
@@ -10,18 +10,15 @@ module Wasp
 
     getter source_path, site_config
 
-    @site_config : Hash(YAML::Type, YAML::Type)
+    @site_config : Hash(String, YAML::Any)
     @files : Array(FileSystem::ContentFile)
 
     def initialize(source_path : String, options = {} of String => String)
       @source_path = File.expand_path(source_path)
 
-      raise NotFoundFileError.new("Not found config file: " + config_file) unless File.exists?(config_file)
       raise NotFoundFileError.new("Not found contents path: " + contents_path) unless Dir.exists?(contents_path)
 
-      @site_config = YAML.parse(File.read(config_file)).as_h
-      @site_config.merge!(options)
-
+      @site_config = load_and_merge_config(@source_path, options)
       @files = [] of FileSystem::ContentFile
     end
 
@@ -37,9 +34,9 @@ module Wasp
 
     def app_info
       {
-        "name": Wasp::NAME,
+        "name":    Wasp::NAME,
         "version": Wasp::VERSION,
-        "crystal": Crystal::VERSION
+        "crystal": Crystal::VERSION,
       }
     end
 
@@ -67,6 +64,20 @@ module Wasp
 
     private def path_to(path)
       File.join(@source_path, path)
+    end
+
+    private def load_and_merge_config(source_path : String, options : Hash(String, String))
+      config = Configuration.load_file(source_path).as_h
+
+      Hash(String, YAML::Any).new.tap do |obj|
+        config.each do |k, v|
+          obj[k.to_s] = v
+        end
+
+        options.each do |k, v|
+          obj[k] = YAML::Any.new(v)
+        end
+      end
     end
   end
 end

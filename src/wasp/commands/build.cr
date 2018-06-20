@@ -33,8 +33,8 @@ class Wasp::Command
 
       copy_assets(generator.source_path)
 
-      UI.verbose "Using config file: #{generator.source_path}"
-      UI.verbose "Generating static files to #{generator.public_path}"
+      Terminal::UI.verbose "Using config file: #{generator.source_path}"
+      Terminal::UI.verbose "Generating static files to #{generator.public_path}"
 
       pages = generator.contents.sort_by(&.date).reverse.map(&.as_h)
 
@@ -55,10 +55,10 @@ class Wasp::Command
         FileUtils.mkdir_p(single_output_path)
         File.write(File.join(single_output_path, "index.html"), single_template.render(global_ctx))
 
-        UI.verbose("Write to #{File.join(single_output_path, "index.html")}")
+        Terminal::UI.verbose("Write to #{File.join(single_output_path, "index.html")}")
       end
 
-      UI.message("Total in #{(Time.now - start_time).total_milliseconds} ms")
+      Terminal::UI.message("Total in #{(Time.now - start_time).total_milliseconds} ms")
     end
 
     private def copy_assets(source_path)
