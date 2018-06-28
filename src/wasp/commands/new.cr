@@ -1,13 +1,17 @@
-class Wasp::Command
-  class New < GlobalOptions
-    class Help
-      caption "Create a new content(post, page etc)"
-    end
+module Wasp
+  class Command < Cli::Supercommand
+    command "n", aliased: "new"
 
-    def run
-      super
+    class New < GlobalOptions
+      class Help
+        caption "Create a new content(post, page etc)"
+      end
 
-     Terminal::UI.important "To be continue"
+      def run
+        super
+
+        Terminal::UI.important "To be continue"
+      end
     end
   end
 end

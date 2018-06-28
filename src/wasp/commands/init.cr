@@ -1,13 +1,17 @@
-class Wasp::Command
-  class Init < GlobalOptions
-    class Help
-      caption "Initialize a new site"
-    end
+module Wasp
+  class Command < Cli::Supercommand
+    command "i", aliased: "init"
 
-    def run
-      super
+    class Init < GlobalOptions
+      class Help
+        caption "Initialize a new site"
+      end
 
-      Terminal::UI.important "To be continue"
+      def run
+        super
+
+        Terminal::UI.important "To be continue"
+      end
     end
   end
 end

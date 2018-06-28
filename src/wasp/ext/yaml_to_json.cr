@@ -1,4 +1,3 @@
-
 struct YAML::Any
   def to_json(json : JSON::Builder)
     @raw.to_json(json)

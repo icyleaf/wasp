@@ -2,7 +2,7 @@ require "cli"
 require "terminal-ui"
 
 module Wasp
-  abstract class GlobalOptions < Cli::Command
+  class GlobalOptions < Cli::Command
     class Options
       string %w(-s --source), var: "string", default: ".", desc: "the source path of site to read"
       string %w(-o --output), var: "string", desc: "the path of generate to write"
