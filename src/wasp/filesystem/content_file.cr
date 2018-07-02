@@ -1,7 +1,8 @@
+require "./front_matter"
 require "markd"
 require "uri"
 
-module Wasp::FileSystem
+class Wasp::FileSystem
   class ContentFile
     getter content
 
@@ -9,7 +10,7 @@ module Wasp::FileSystem
 
     FRONT_MATTER_REGEX = /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
 
-    def initialize(file : String, @site_config : Hash(String, YAML::Any))
+    def initialize(file : String, @site_config : Configuration)
       @file = File.expand_path(file)
       @name = File.basename(@file)
 
@@ -39,13 +40,13 @@ module Wasp::FileSystem
     end
 
     def link(ugly_url = "false")
-      @site_config["ugly_url"] ||= YAML::Any.new(ugly_url.to_s)
-      File.join(@site_config["base_url"].to_s, permalink(@site_config["ugly_url"]))
+      ugly_url = @site_config["ugly_url"]? || ugly_url.to_s
+      File.join(@site_config["base_url"].to_s, permalink(ugly_url))
     end
 
     def permalink(ugly_url = "false")
       sections = [] of String
-      @site_config.fetch("permalink", ":filename").to_s.split("/").each do |section|
+      (@site_config["permalink"]? || ":filename").to_s.split("/").each do |section|
         next if section.empty?
 
         sections << permalink_section(section).to_s
@@ -56,9 +57,11 @@ module Wasp::FileSystem
       uri
     end
 
-    macro method_missing(call)
-      @front_matter.{{ call.name.id }}
-    end
+    forward_missing_to @front_matter
+
+    # macro method_missing(call)
+    #   @front_matter.{{ call.name.id }}
+    # end
 
     def as_h
       @front_matter.as_h.merge({

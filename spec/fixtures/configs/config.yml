@@ -1,0 +1,13 @@
+title: "Wasp"
+subtitle: "A Static Site Generator"
+description: "Wasp is a Static Site Generator written in Crystal."
+# timezone: "Asia/Shanghai"
+
+base_url: "https://icyleaf.github.io/wasp/"
+# theme: "nest"
+
+# avaiabled in basic/marked
+markdown: marked
+
+permalink: ":section/:title/"
+ugly_url: false
