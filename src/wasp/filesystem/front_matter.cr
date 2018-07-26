@@ -66,26 +66,24 @@ class Wasp::FileSystem
       })
     end
 
-    forward_missing_to @inner
+    macro method_missing(call)
+      @inner.fetch({{ call.name.id.stringify }}, "")
 
-    # macro method_missing(call)
-    #   @inner.fetch({{ call.name.id.stringify }}, "")
-
-    #   # TODO: i don't know why this not works
-    #   # case object = @inner.fetch({{ call.name.id.stringify }}, "")
-    #   # when Nil
-    #   #   object.to_s
-    #   # when String
-    #   #   object.as(YAML::Any)
-    #   # when Array
-    #   #   puts {{ call.name.id.stringify }}
-    #   #   puts object.class
-    #   #   object.as(Array(YAML::Any))
-    #   # when Hash
-    #   #   object.as(Hash(YAML::Any, YAML::Any))
-    #   # else
-    #   #   object
-    #   # end
-    # end
+      # TODO: i don't know why this not works
+      # case object = @inner.fetch({{ call.name.id.stringify }}, "")
+      # when Nil
+      #   object.to_s
+      # when String
+      #   object.as(YAML::Any)
+      # when Array
+      #   puts {{ call.name.id.stringify }}
+      #   puts object.class
+      #   object.as(Array(YAML::Any))
+      # when Hash
+      #   object.as(Hash(YAML::Any, YAML::Any))
+      # else
+      #   object
+      # end
+    end
   end
 end

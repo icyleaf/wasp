@@ -11,20 +11,20 @@ describe Wasp::Configuration do
       config = load_config("config.yml")
       config.file.ends_with?("config.yml").should be_true
 
-      config["title"].should eq "Wasp"
+      config["title"].as_s.should eq "Wasp"
     end
   end
 
-  describe "#decode" do
-    it "should decode full config to a struct" do
+  describe "#mapping" do
+    it "should mapping full config to a struct" do
       config = load_config("config.yml")
-      site = Wasp::Configuration.decode(config, Wasp::Configuration::SiteStruct)
+      site = config.mapping(Wasp::Configuration::SiteStruct)
       site.title.should eq "Wasp"
     end
 
-    it "should decode a key of config to a struct" do
+    it "should mapping a key of config to a struct" do
       config = load_config("config_with_social.yml")
-      social = Wasp::Configuration.decode(config, "social", Wasp::Configuration::SocialStruct)
+      social = config.mapping(Wasp::Configuration::SocialStruct, "social")
       if s = social
         s.twitter.should eq "icyleaf"
       end
@@ -32,8 +32,8 @@ describe Wasp::Configuration do
 
     it "throws an exception if not exists the key" do
       config = load_config("config_with_social.yml")
-      expect_raises Wasp::ConfigDecodeError do
-        Wasp::Configuration.decode(config, "foobar", Wasp::Configuration::SocialStruct)
+      expect_raises Totem::MappingError do
+        config.mapping(Wasp::Configuration::SocialStruct, "null")
       end
     end
   end

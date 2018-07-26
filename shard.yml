@@ -11,16 +11,20 @@ targets:
 dependencies:
   markd:
     github: icyleaf/markd
-    branch: master
+    version: ~> 0.1.1
+  totem:
+    github: icyleaf/totem
+    version: ~> 0.2.1
   terminal-ui:
     github: icyleaf/terminal-ui.cr
+    version: ~> 0.1.0
+  cli:
+    github: mosop/cli
+    version: ~> 0.7.0
   liquid:
     github: TechMagister/liquid.cr
     branch: master
-  cli:
-    github: mosop/cli
-    branch: master
 
-crystal: 0.25.0
+crystal: 0.25.1
 
 license: MIT

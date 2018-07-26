@@ -44,7 +44,7 @@ module Wasp
       private def load_and_merge_config(source_path : String, options : Hash(String, String))
         config = Configuration.load_file(source_path)
         options.each do |k, v|
-          config[YAML::Any.new(k)] = YAML::Any.new(v)
+          config.set(k, v)
         end
         config
       end

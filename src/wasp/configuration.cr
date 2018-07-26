@@ -1,4 +1,4 @@
-require "yaml"
+require "totem"
 
 module Wasp
   class Configuration
@@ -8,44 +8,18 @@ module Wasp
       new(path)
     end
 
-    def self.decode(raws : YAML::Any | Configuration, key : String, converter : _)
-      raise ConfigDecodeError.new("Not found the key in configuration: #{key}") unless raws[key]?
-      decode raws[key], converter
-    end
-
-    def self.decode(raws : YAML::Any | Configuration, converter : _)
-      converter.from_yaml raws.to_yaml
-    end
-
     getter file : String
 
     @file : String
-    @data : YAML::Any
+    @raw : Totem::Config
 
     def initialize(path : String? = nil)
-      @file = file(path)
+      @file = find_file(path)
       raise NotFoundFileError.new("Not found config file.") unless File.exists?(@file)
-
-      @data = YAML.parse(File.open(@file))
+      @raw = Totem.from_file(@file)
     end
 
-    def []=(key, value)
-      @data.as_h[key] = value
-    end
-
-    def [](key)
-      @data.as_h[key]
-    end
-
-    def []?(key)
-      @data.as_h[key]?
-    end
-
-    def fetch(key, default = nil)
-      @data.as_h[key]? || default
-    end
-
-    forward_missing_to @data
+    forward_missing_to @raw
 
     def app_info
       {
@@ -55,11 +29,7 @@ module Wasp
       }
     end
 
-    def to_json(json)
-      @data.to_json(json)
-    end
-
-    private def file(path)
+    private def find_file(path)
       if path
         if File.directory?(path.not_nil!)
           File.join(path.not_nil!, DEFAULT_FILENAME)
