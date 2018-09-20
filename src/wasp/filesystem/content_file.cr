@@ -16,7 +16,7 @@ class Wasp::FileSystem
 
       text = File.read(@file)
       if text =~ FRONT_MATTER_REGEX
-        @front_matter = FrontMatter.new($1)
+        @front_matter = FrontMatter.new($1, @site_config["timezone"].as_s)
       else
         raise MissingFrontMatterError.new("Not found metadata in " + @file)
       end

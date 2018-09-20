@@ -48,6 +48,7 @@ module Wasp
       property subtitle : String
       property description : String
       property base_url : String
+      property timezone : String
       property permalink : String
       property ugly_url : Bool
     end

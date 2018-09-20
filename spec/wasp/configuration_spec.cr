@@ -11,7 +11,13 @@ describe Wasp::Configuration do
       config = load_config("config.yml")
       config.file.ends_with?("config.yml").should be_true
 
-      config["title"].as_s.should eq "Wasp"
+      config["title"].should eq "Wasp"
+      config["subtitle"].should eq "A Static Site Generator"
+      config["description"].should eq "Wasp is a Static Site Generator written in Crystal."
+      config["timezone"].should eq "Asia/Shanghai"
+      config["base_url"].should eq "https://icyleaf.github.io/wasp/"
+      config["permalink"].should eq ":section/:title/"
+      config["ugly_url"].should be_false
     end
   end
 

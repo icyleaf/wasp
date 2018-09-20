@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 private def empty_front_matter
-  Wasp::FileSystem::FrontMatter.new("")
+  Wasp::FileSystem::FrontMatter.new("", "Asia/Shanghai")
 end
 
 describe Wasp::FileSystem::FrontMatter do
@@ -10,13 +10,9 @@ describe Wasp::FileSystem::FrontMatter do
       empty_front_matter.should be_a(Wasp::FileSystem::FrontMatter)
     end
 
-    it "works with instance method" do
-      Wasp::FileSystem::FrontMatter.parse("").should be_a(Wasp::FileSystem::FrontMatter)
-    end
-
     it "raise exception without YAML data" do
       expect_raises Wasp::FrontMatterParseError do
-        Wasp::FileSystem::FrontMatter.parse("not-yaml-data")
+        Wasp::FileSystem::FrontMatter.parse("not-yaml-data", "Asia/Shanghai")
       end
     end
   end
@@ -58,10 +54,10 @@ describe Wasp::FileSystem::FrontMatter do
       author: [icyleaf, "Wang Shen"]
       YAML
 
-      m = Wasp::FileSystem::FrontMatter.new(text)
+      m = Wasp::FileSystem::FrontMatter.new(text, "Asia/Shanghai")
       m.title.should eq("Getting Started")
       m.slug.should eq("getting-started")
-      m.date.should eq(Time.parse("2017-05-01T15:00:31+08:00", Wasp::FileSystem::FrontMatter::WASP_DATE_FORMAT))
+      m.date.should eq(Time.parse("2017-05-01T15:00:31+08:00", Wasp::FileSystem::FrontMatter::WASP_DATE_FORMAT, Time::Location.load("Asia/Shanghai")))
       m.categories.should eq(["Guide"])
       m.tags.should eq(["documents", "install"])
 
@@ -70,42 +66,42 @@ describe Wasp::FileSystem::FrontMatter do
     end
 
     it "tags accept string" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ntags: crystal")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags: crystal", "Asia/Shanghai")
       m.tags.should eq(["crystal"])
     end
 
     it "tags accept empty string" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ntags: ")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags: ", "Asia/Shanghai")
       m.tags.should eq([] of YAML::Any)
     end
 
     it "tags accept array" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ntags: \n  - crystal\n  - \"ruby\"")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags: \n  - crystal\n  - \"ruby\"", "Asia/Shanghai")
       m.tags.should eq(["crystal", "ruby"])
     end
 
     it "tags returns empty without string or array" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ntags:\n  crystal : Crystal")
+      m = Wasp::FileSystem::FrontMatter.new("---\ntags:\n  crystal : Crystal", "Asia/Shanghai")
       m.tags.should eq([] of YAML::Any)
     end
 
     it "categories accept string" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: crystal")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: crystal", "Asia/Shanghai")
       m.categories.should eq(["crystal"])
     end
 
     it "categories accept empty string" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: ")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: ", "Asia/Shanghai")
       m.categories.should eq([] of YAML::Any)
     end
 
     it "categories accept array" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: \n  - crystal\n  - \"ruby\"")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories: \n  - crystal\n  - \"ruby\"", "Asia/Shanghai")
       m.categories.should eq(["crystal", "ruby"])
     end
 
     it "categories returns empty without string or array" do
-      m = Wasp::FileSystem::FrontMatter.new("---\ncategories:\n  crystal : Crystal")
+      m = Wasp::FileSystem::FrontMatter.new("---\ncategories:\n  crystal : Crystal", "Asia/Shanghai")
       m.categories.should eq([] of YAML::Any)
     end
   end

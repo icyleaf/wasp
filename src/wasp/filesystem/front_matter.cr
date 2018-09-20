@@ -4,11 +4,11 @@ class Wasp::FileSystem
 
     @inner : Hash(YAML::Any, YAML::Any)
 
-    def self.parse(text : String)
-      self.new(text)
+    def self.parse(text : String, timezone : String)
+      self.new(text, timezone)
     end
 
-    def initialize(text : String)
+    def initialize(text : String, @timezone : String)
       @inner = if text.empty?
                  {} of YAML::Any => YAML::Any
                else
@@ -25,7 +25,7 @@ class Wasp::FileSystem
     end
 
     def date
-      Time.parse(@inner.fetch("date", "1970-01-01T00:00:00+00:00").to_s, WASP_DATE_FORMAT)
+      Time.parse(@inner.fetch("date", "1970-01-01T00:00:00+00:00").to_s, WASP_DATE_FORMAT, Time::Location.load(@timezone))
     end
 
     def slug
