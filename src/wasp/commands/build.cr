@@ -1,5 +1,4 @@
 require "file_utils"
-require "liquid"
 require "yaml"
 
 module Wasp

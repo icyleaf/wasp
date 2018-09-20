@@ -8,13 +8,9 @@ shards:
     github: mosop/cli
     version: 0.7.0
 
-  inflector:
-    github: phoffer/inflector.cr
-    version: 0.1.8
-
-  liquid:
-    github: TechMagister/liquid.cr
-    commit: 26c965afe8fdf1869a606b1c4aaaf6a127ead647
+  crinja:
+    github: straight-shoota/crinja
+    version: 0.3.0
 
   markd:
     github: icyleaf/markd

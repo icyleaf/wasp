@@ -18,12 +18,12 @@ dependencies:
   terminal-ui:
     github: icyleaf/terminal-ui.cr
     version: ~> 0.1.0
+  crinja:
+    github: straight-shoota/crinja
+    version: ~> 0.3.0
   cli:
     github: mosop/cli
     version: ~> 0.7.0
-  liquid:
-    github: TechMagister/liquid.cr
-    branch: master
 
 crystal: 0.26.1
 

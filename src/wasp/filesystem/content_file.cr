@@ -3,7 +3,7 @@ require "markd"
 require "uri"
 
 class Wasp::FileSystem
-  class ContentFile
+  struct ContentFile
     getter content
 
     @content : String
@@ -59,16 +59,12 @@ class Wasp::FileSystem
 
     forward_missing_to @front_matter
 
-    # macro method_missing(call)
-    #   @front_matter.{{ call.name.id }}
-    # end
-
-    def as_h
-      @front_matter.as_h.merge({
-        "summary"   => summary,
-        "content"   => @content,
-        "permalink" => permalink,
-        "link"      => link,
+    def to_h
+      @front_matter.to_h.merge({
+        "summary"   => Totem::Any.new(summary),
+        "content"   => Totem::Any.new(@content),
+        "permalink" => Totem::Any.new(permalink),
+        "link"      => Totem::Any.new(link),
       })
     end
 

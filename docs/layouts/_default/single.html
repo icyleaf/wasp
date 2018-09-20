@@ -8,12 +8,12 @@
   <meta name="author" content="{{ site.author }}">
   <title>{{ page.title }} | {{ site.title }}</title>
 
-  {% include "../partial/header.html" %}
+  {% include "partial/header.html" %}
 </head>
 
 <body>
   <header>
-    {% include "../partial/menu.html" %}
+    {% include "partial/menu.html" %}
   </header>
 
   <main>
@@ -30,12 +30,12 @@
     <div class="container">
       <div class="row">
         <div class="col s12">
-          <div class="section scrollspy" id="content-body">{{ page.content }}</div>
+          <div class="section scrollspy" id="content-body">{{ page.content | safe }}</div>
         </div>
       </div>
     </div>
   </main>
 
-  {% include "../partial/footer.html" %}
+  {% include "partial/footer.html" %}
 </body>
 </html>

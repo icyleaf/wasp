@@ -1,8 +1,8 @@
 class Wasp::FileSystem
-  class FrontMatter
+  struct FrontMatter
     WASP_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S%:z"
 
-    @inner : Hash(YAML::Any, YAML::Any)
+    @inner : Totem::Config
 
     def self.parse(text : String, timezone : String)
       self.new(text, timezone)
@@ -10,10 +10,10 @@ class Wasp::FileSystem
 
     def initialize(text : String, @timezone : String)
       @inner = if text.empty?
-                 {} of YAML::Any => YAML::Any
+                 Totem.new
                else
                  begin
-                   YAML.parse(text).as_h
+                  Totem.from_yaml(text)
                  rescue TypeCastError
                    raise FrontMatterParseError.new("can not parse front matter from yaml string")
                  end
@@ -21,7 +21,7 @@ class Wasp::FileSystem
     end
 
     def title
-      @inner.fetch("title", "").to_s
+      @inner["title"].to_s
     end
 
     def date
@@ -29,42 +29,50 @@ class Wasp::FileSystem
     end
 
     def slug
-      @inner.fetch("slug", "").to_s
+      @inner["slug"].to_s
     end
 
     def tags
-      case object = @inner.fetch("tags", YAML::Any.new(""))
-      when .as_s?
-        [object]
-      when .as_a?
-        object
-      else
-        [] of YAML::Any
-      end
+      # case object = @inner["tags"]?
+      # when .as_s?
+      #   [object]
+      # when .as_a?
+      #   object
+      # else
+        [] of String
+      # end
     end
 
     def categories
-      case object = @inner.fetch("categories", YAML::Any.new(""))
-      when .as_s?
-        [object]
-      when .as_a?
-        object
-      else
-        [] of YAML::Any
-      end
+      # case object = @inner.fetch("categories", YAML::Any.new(""))
+      # when .as_s?
+      #   [object]
+      # when .as_a?
+      #   object
+      # else
+        [] of String
+      # end
     end
 
     def draft?
-      @inner.fetch("draft", "false") == "true"
+      @inner.fetch("draft", "false").as_bool
     end
 
-    def as_h
-      @inner.merge({
-        "date"       => date,
+    def to_h
+      @inner.set_defaults({
+        "date"       => date.to_s,
         "tags"       => tags,
         "categories" => categories,
       })
+
+      @inner.to_h
     end
+
+    def dup
+
+    end
+
+    forward_missing_to @inner
 
     macro method_missing(call)
       @inner.fetch({{ call.name.id.stringify }}, "")

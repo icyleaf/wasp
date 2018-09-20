@@ -1,5 +1,5 @@
 require "file_utils"
-require "liquid"
+require "crinja"
 
 class Wasp::Generator
   class Contents
@@ -26,43 +26,46 @@ class Wasp::Generator
     end
 
     private def generate_pages(context)
-      template_ctx = Liquid::Context.new
-      template_ctx.set "site", context.site_config
-      template_ctx.set "wasp", context.app_info
-      template_ctx.set "pages", context.pages.map(&.as_h)
+      template_env = Crinja.new
+      template_env.loader = Crinja::Loader::FileSystemLoader.new(context.layouts_path)
+
+      variables = {
+        "site" => context.site_config.to_h,
+        "wasp" => context.app_info,
+        "pages" => context.pages.map(&.to_h)
+      }
 
       PAGES.each do |page|
-        source_file = File.join context.source_path, "layouts", page
         desc_file = File.join context.public_path, page
-        generate_page source_file, desc_file, template_ctx
+        generate_page page, desc_file, template_env, variables
       end
 
       context.pages.each do |content|
-        source_file = File.join(context.layouts_path, "_default/single.html")
+        source_file = "_default/single.html"
         desc_file = File.join(context.public_path, content.permalink, "index.html")
 
-        generate_page(source_file, desc_file, template_ctx) do |ctx|
+        generate_page(source_file, desc_file, template_env, variables) do |variables|
           Terminal::UI.verbose("Write to #{desc_file}")
 
-          ctx.set "page", content.as_h
-          ctx
+          variables["page"] = content.to_h
+          variables
         end
       end
     end
 
-    private def generate_page(source_file, desc_file, template_ctx)
-      template = template_file source_file
-      File.write desc_file, template.render(template_ctx)
+    private def generate_page(source_file, desc_file, template_env, variables)
+      template = template_env.get_template source_file
+      File.write desc_file, template.render(variables)
     end
 
-    private def generate_page(source_file, desc_file, template_ctx)
-      template = template_file source_file
-      template_ctx = yield template_ctx
+    private def generate_page(source_file, desc_file, template_env, variables)
+      template = template_env.get_template source_file
+      variables = yield variables
 
       desc_path = File.dirname desc_file
       FileUtils.mkdir_p desc_path unless Dir.exists?(desc_path)
 
-      File.write desc_file, template.render(template_ctx)
+      File.write desc_file, template.render(variables)
     end
 
     private def template_file(path)
