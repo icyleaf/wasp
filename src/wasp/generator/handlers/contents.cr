@@ -30,9 +30,9 @@ class Wasp::Generator
       template_env.loader = Crinja::Loader::FileSystemLoader.new(context.layouts_path)
 
       variables = {
-        "site" => context.site_config.to_h,
-        "wasp" => context.app_info,
-        "pages" => context.pages.map(&.to_h)
+        "site"  => context.site_config.to_h,
+        "wasp"  => context.app_info,
+        "pages" => context.pages.map(&.to_h),
       }
 
       PAGES.each do |page|

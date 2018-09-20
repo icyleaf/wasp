@@ -13,7 +13,7 @@ class Wasp::FileSystem
                  Totem.new
                else
                  begin
-                  Totem.from_yaml(text)
+                   Totem.from_yaml(text)
                  rescue TypeCastError
                    raise FrontMatterParseError.new("can not parse front matter from yaml string")
                  end
@@ -21,7 +21,7 @@ class Wasp::FileSystem
     end
 
     def title
-      @inner["title"].to_s
+      @inner["title"]?.to_s
     end
 
     def date
@@ -29,33 +29,19 @@ class Wasp::FileSystem
     end
 
     def slug
-      @inner["slug"].to_s
+      @inner["slug"]?.to_s
     end
 
     def tags
-      # case object = @inner["tags"]?
-      # when .as_s?
-      #   [object]
-      # when .as_a?
-      #   object
-      # else
-        [] of String
-      # end
+      find_array_value("tags")
     end
 
     def categories
-      # case object = @inner.fetch("categories", YAML::Any.new(""))
-      # when .as_s?
-      #   [object]
-      # when .as_a?
-      #   object
-      # else
-        [] of String
-      # end
+      find_array_value("categories")
     end
 
     def draft?
-      @inner.fetch("draft", "false").as_bool
+      @inner.fetch("draft", "false").not_nil!.as_bool
     end
 
     def to_h
@@ -69,7 +55,6 @@ class Wasp::FileSystem
     end
 
     def dup
-
     end
 
     forward_missing_to @inner
@@ -92,6 +77,19 @@ class Wasp::FileSystem
       # else
       #   object
       # end
+    end
+
+    private def find_array_value(key : String)
+      return Array(String).new unless object = @inner[key]?
+
+      case object
+      when .as_s?
+        [object.as_s]
+      when .as_a?
+        object.as_a.map(&.as_s)
+      else
+        Array(String).new
+      end
     end
   end
 end
