@@ -42,7 +42,7 @@ module Wasp
       end
 
       private def load_and_merge_config(source_path : String, options : Hash(String, String))
-        config = Configuration.load_file(source_path)
+        config = Configuration.configure(source_path)
         options.each do |k, v|
           config.set(k, v)
         end

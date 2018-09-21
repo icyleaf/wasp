@@ -9,7 +9,7 @@ module Wasp
 
       def run
         path = args.source? ? args.source : "."
-        config = Configuration.load_file(path)
+        config = Configuration.configure(path)
         config.each do |k, v|
           puts "#{k}: #{v}"
         end

@@ -41,12 +41,12 @@ class Wasp::FileSystem
     end
 
     def draft?
-      @inner.fetch("draft", "false").not_nil!.as_bool
+      @inner.fetch("draft", "false").as_bool
     end
 
     def to_h
       @inner.set_defaults({
-        "date"       => date.to_s,
+        "date"       => date,
         "tags"       => tags,
         "categories" => categories,
       })
@@ -80,7 +80,8 @@ class Wasp::FileSystem
     end
 
     private def find_array_value(key : String)
-      return Array(String).new unless object = @inner[key]?
+      empty_array = Array(String).new
+      return empty_array unless object = @inner[key]?
 
       case object
       when .as_s?
@@ -88,7 +89,7 @@ class Wasp::FileSystem
       when .as_a?
         object.as_a.map(&.as_s)
       else
-        Array(String).new
+        empty_array
       end
     end
   end

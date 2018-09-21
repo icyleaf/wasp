@@ -22,7 +22,7 @@ shards:
 
   popcorn:
     github: icyleaf/popcorn
-    version: 0.1.1
+    version: 0.2.0
 
   string_inflection:
     github: mosop/string_inflection
@@ -30,9 +30,9 @@ shards:
 
   terminal-ui:
     github: icyleaf/terminal-ui.cr
-    version: 0.1.1
+    version: 0.1.2
 
   totem:
     github: icyleaf/totem
-    version: 0.4.0
+    commit: c7c77acb8ebe781dbcf80df2eedf0cbab6102390
 

@@ -2,24 +2,11 @@ require "totem"
 
 module Wasp
   class Configuration
-    DEFAULT_FILENAME = "config.yml"
+    include Totem::ConfigBuilder
 
-    def self.load_file(path : String = nil)
-      new(path)
+    build do
+      config_type "yaml"
     end
-
-    getter file : String
-
-    @file : String
-    @raw : Totem::Config
-
-    def initialize(path : String? = nil)
-      @file = find_file(path)
-      raise NotFoundFileError.new("Not found config file.") unless File.exists?(@file)
-      @raw = Totem.from_file(@file)
-    end
-
-    forward_missing_to @raw
 
     def app_info
       {
@@ -27,18 +14,6 @@ module Wasp
         "version": Wasp::VERSION,
         "crystal": Crystal::VERSION,
       }
-    end
-
-    private def find_file(path)
-      if path
-        if File.directory?(path.not_nil!)
-          File.join(path.not_nil!, DEFAULT_FILENAME)
-        else
-          path.not_nil!
-        end
-      else
-        DEFAULT_FILENAME
-      end
     end
 
     struct SiteStruct

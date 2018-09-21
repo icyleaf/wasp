@@ -1,4 +1,3 @@
-require "./wasp/ext/*"
 require "./wasp/*"
 
 unless ENV.has_key?("WASP_SPEC_RUNNING")

@@ -2,14 +2,13 @@ require "../spec_helper"
 
 private def load_config(file : String)
   path = File.expand_path("../../fixtures/configs", __FILE__)
-  Wasp::Configuration.new(File.join(path, file))
+  Wasp::Configuration.configure(File.join(path, file))
 end
 
 describe Wasp::Configuration do
   describe "#initialize" do
     it "should returns same as YAML::Any" do
       config = load_config("config.yml")
-      config.file.ends_with?("config.yml").should be_true
 
       config["title"].should eq "Wasp"
       config["subtitle"].should eq "A Static Site Generator"

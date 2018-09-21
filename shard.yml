@@ -14,7 +14,8 @@ dependencies:
     version: ~> 0.1.1
   totem:
     github: icyleaf/totem
-    version: ~> 0.4.0
+    # version: ~> 0.4.0
+    branch: master
   terminal-ui:
     github: icyleaf/terminal-ui.cr
     version: ~> 0.1.0
