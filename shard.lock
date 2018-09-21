@@ -34,5 +34,5 @@ shards:
 
   totem:
     github: icyleaf/totem
-    commit: c7c77acb8ebe781dbcf80df2eedf0cbab6102390
+    commit: e122f16c77d6dcbaefc88b20f8d8e58a6b232760
 
